@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormUtils } from '../../../utils/form-utils';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -20,24 +21,33 @@ export class LoginPageComponent {
 
   formUtils = FormUtils;
 
-  loginForm: FormGroup = this.fb.group(
-    {
-      email: [
-        '',
-        [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
-        [FormUtils.checkingServerResponse],
+  loginForm: FormGroup = this.fb.group({
+    email: [
+      '',
+      [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
+      [FormUtils.checkingServerResponse],
+    ],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(this.formUtils.notOnlySpacesPattern),
       ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.formUtils.notOnlySpacesPattern),
-        ],
-      ],
-    },
-  );
+    ],
+    rememberMe: [false],
+  });
+
+  constructor(private readonly authService: AuthService) {}
 
   onSubmit() {
     this.loginForm.markAllAsTouched();
+    if (this.loginForm.valid) {
+      const email = this.loginForm.controls['email'].value;
+      const password = this.loginForm.controls['password'].value;
+
+      this.authService
+        .loginUser({ email, password })
+        .subscribe((res) => console.log(res));
+    }
   }
 }
