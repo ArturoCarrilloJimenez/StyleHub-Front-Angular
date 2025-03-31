@@ -101,24 +101,4 @@ export class FormUtils {
       return fiel1 === fiel2 ? null : { passwordNotEqual: true };
     };
   }
-
-  static async checkingServerResponse(
-    control: AbstractControl
-  ): Promise<ValidationErrors | null> {
-    console.log('Llamada al server');
-
-    await diley(1500);
-
-    const fromValue = control.value;
-
-    return fromValue === 'admin@admin.com' ? { emailTaken: true } : null;
-  }
-
-  static checkingStrider(
-    control: AbstractControl
-  ): ValidationErrors | null {
-    const fromValue = control.value;
-
-    return fromValue === 'strider' ? { notStrider: true } : null;
-  }
 }

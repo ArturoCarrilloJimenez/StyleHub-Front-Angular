@@ -29,8 +29,8 @@
           formControlName="email"
         />
       </label>
+      <div class="validator-hint hidden">{{ formUtils.getFielError(loginForm, "email") }}</div>
        @if (formUtils.isValidField(loginForm, 'email')) {
-         <div class="validator-hint hidden">{{ formUtils.getFielError(loginForm, "email") }}</div>
        }
     </div>
 
@@ -74,12 +74,14 @@
         formControlName="rememberMe"
           type="checkbox"
           class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          formControlName="rememberLogin"
         />
         <span class="ml-2 text-sm text-gray-600">Remember me</span>
       </label>
-      <a class="text-sm text-indigo-600 hover:text-indigo-500"
+      <!-- TODO recuperar cuenta, necesito modificar back -->
+      <!-- <a class="text-sm text-indigo-600 hover:text-indigo-500"
         >Forgot password?</a
-      >
+      > -->
     </div>
 
     <button type="submit" class="btn btn-soft w-full">Sing in</button>

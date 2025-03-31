@@ -25,28 +25,26 @@ export class LoginPageComponent {
     email: [
       '',
       [Validators.required, Validators.pattern(this.formUtils.emailPattern)],
-      [FormUtils.checkingServerResponse],
     ],
     password: [
       '',
       [
         Validators.required,
-        Validators.pattern(this.formUtils.notOnlySpacesPattern),
       ],
     ],
-    rememberMe: [false],
+    rememberLogin: [false],
   });
 
   constructor(private readonly authService: AuthService) {}
 
   onSubmit() {
     this.loginForm.markAllAsTouched();
+
     if (this.loginForm.valid) {
-      const email = this.loginForm.controls['email'].value;
-      const password = this.loginForm.controls['password'].value;
+      const { email, password, rememberLogin } = this.loginForm.value;
 
       this.authService
-        .loginUser({ email, password })
+        .loginUser({ email, password }, rememberLogin)
         .subscribe((res) => console.log(res));
     }
   }

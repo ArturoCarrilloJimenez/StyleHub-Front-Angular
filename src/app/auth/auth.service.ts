@@ -11,7 +11,7 @@ type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
   providedIn: 'root',
 })
 export class AuthService {
-  private URL = environment.baseUrl
+  private URL = environment.baseUrl;
 
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<User | null>(null);
@@ -21,16 +21,18 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient) {}
 
-  loginUser(form: { email: string; password: string }) {
+  loginUser(form: { email: string; password: string }, rememberLogin: boolean) {
     return this.http.post<LoginResponse>(this.URL + 'auth/login', form).pipe(
       tap((resp) => {
-        sessionStorage.setItem('token', resp.token);
+        rememberLogin
+          ? localStorage.setItem('token', resp.token)
+          : sessionStorage.setItem('token', resp.token);
       })
     );
   }
 
   logout() {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
     sessionStorage.removeItem('token');
   }
 }
