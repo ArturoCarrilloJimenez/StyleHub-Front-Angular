@@ -1,6 +1,16 @@
 <div class="p-5 shadow-xl bg-base-200">
   <h1 class="text-2xl mb-2 font-boldb-6 text-center">Sign In</h1>
 
+  <!-- Error -->
+  @if (hasError()) {
+    <div
+    role="alert"
+    class="alert alert-error alert-soft mb-3"
+  >
+    <span>Invalid credentials, check email and password</span>
+  </div>
+  }
+
   <form class="space-y-4 w-100" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <!-- Email Input -->
     <div>
@@ -27,11 +37,14 @@
           placeholder="mail@site.com"
           required
           formControlName="email"
+          [pattern]="emailPater"
         />
       </label>
-      <div class="validator-hint hidden">{{ formUtils.getFielError(loginForm, "email") }}</div>
-       @if (formUtils.isValidField(loginForm, 'email')) {
-       }
+      @if (formUtils.isValidField(loginForm, 'email')) {
+      <div class="validator-hint hidden">
+        {{ formUtils.getFielError(loginForm, "email") }}
+      </div>
+      }
     </div>
 
     <!-- Password input -->
@@ -63,15 +76,17 @@
         />
       </label>
       @if (formUtils.isValidField(loginForm, 'password')) {
-         <div class="validator-hint hidden">{{ formUtils.getFielError(loginForm, "password") }}</div>
-       }
+      <div class="validator-hint hidden">
+        {{ formUtils.getFielError(loginForm, "password") }}
+      </div>
+      }
     </div>
 
     <!-- TODO hacer el recordado de sesión y olvide la contraseña -->
     <div class="flex items-center justify-between">
       <label class="flex items-center">
         <input
-        formControlName="rememberMe"
+          formControlName="rememberMe"
           type="checkbox"
           class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
           formControlName="rememberLogin"
@@ -84,7 +99,9 @@
       > -->
     </div>
 
-    <button type="submit" class="btn btn-soft w-full">Sing in</button>
+    <button type="submit" [disabled]="isValidForm" class="btn btn-soft w-full">
+      Sing in
+    </button>
   </form>
 
   <div class="mt-6 text-center text-sm text-gray-600">
