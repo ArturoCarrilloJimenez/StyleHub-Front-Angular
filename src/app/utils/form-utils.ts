@@ -16,8 +16,9 @@ async function diley(ms: number) {
 export class FormUtils {
   // Expresiones regulares
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
-  static emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$";
+  static emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i
   static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+  static passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
   // Errores personalizados
   static errorController(errors: ValidationErrors): string | null {
@@ -42,11 +43,14 @@ export class FormUtils {
             case this.namePattern:
               return 'Debes de introducir nombre y primer apellido';
 
-            case this.emailPattern:
+            case this.emailPattern.toString():
               return 'Email incorrecto, comprueba que este escrito de forma correcta';
 
             case this.notOnlySpacesPattern:
               return 'Este campo no debe de tener espacios';
+
+            case this.passwordPattern.toString():
+              return 'La contraseña debe de tener mínimo una mayúscula, minúscula y un numero';
 
             default:
               return 'Error con la comprobación de patrones';
@@ -93,12 +97,18 @@ export class FormUtils {
   }
 
   // Validador personalizado
-  static isFielOneEqualFielTwo(fiel1: string, fiel2: string) {
-    return (formGroup: AbstractControl) => {
-      const fiel1Value = formGroup.get(fiel1)?.value;
-      const fiel2Value = formGroup.get(fiel2)?.value;
+  static isFieldMatch(field1: string, field2: string) {
+    return (formGroup: FormGroup) => {
+      const value1 = formGroup.get(field1)?.value;
+      const value2 = formGroup.get(field2)?.value;
 
-      return fiel1 === fiel2 ? null : { passwordNotEqual: true };
+      if (value1 !== value2) {
+        formGroup.get(field2)?.setErrors({ noMatch: true });
+        return { noMatch: true };
+      } else {
+        formGroup.get(field2)?.setErrors(null);
+        return null;
+      }
     };
   }
 }

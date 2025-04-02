@@ -14,7 +14,7 @@
   <form class="space-y-4 w-100" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <!-- Email Input -->
     <div>
-      <label class="input validator w-full">
+      <label class="input w-full">
         <svg
           class="h-[1em] opacity-50"
           xmlns="http://www.w3.org/2000/svg"
@@ -35,13 +35,11 @@
           width="100px"
           type="email"
           placeholder="mail@site.com"
-          required
           formControlName="email"
-          [pattern]="emailPater"
         />
       </label>
       @if (formUtils.isValidField(loginForm, 'email')) {
-      <div class="validator-hint hidden">
+      <div class="text-xs text-error mt-2">
         {{ formUtils.getFielError(loginForm, "email") }}
       </div>
       }
@@ -49,7 +47,7 @@
 
     <!-- Password input -->
     <div>
-      <label class="input validator w-full">
+      <label class="input w-full">
         <svg
           class="h-[1em] opacity-50"
           xmlns="http://www.w3.org/2000/svg"
@@ -70,13 +68,12 @@
         </svg>
         <input
           type="password"
-          required
           placeholder="Password"
           formControlName="password"
         />
       </label>
       @if (formUtils.isValidField(loginForm, 'password')) {
-      <div class="validator-hint hidden">
+      <div class="text-xs text-error mt-2">
         {{ formUtils.getFielError(loginForm, "password") }}
       </div>
       }

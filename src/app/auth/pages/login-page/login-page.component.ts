@@ -15,7 +15,7 @@ import { AuthService } from '../../auth.service';
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
-}) // TODO la expresión regular o el input de email no funciona de forma correcta, no poner el .com aparece visualmente como correcto pero internamente es incorrecto
+})
 export class LoginPageComponent {
   private fb = inject(FormBuilder);
   hasError = signal<boolean>(false);
@@ -23,6 +23,7 @@ export class LoginPageComponent {
   formUtils = FormUtils;
   emailPater = this.formUtils.emailPattern;
 
+  // TODO realizar validación asíncrona para email
   loginForm: FormGroup = this.fb.group({
     email: [
       '',
@@ -54,7 +55,7 @@ export class LoginPageComponent {
           this.hasError.set(true);
           setTimeout(() => {
             this.hasError.set(false);
-          }, 2000);
+          }, 5000);
         });
     }
   }

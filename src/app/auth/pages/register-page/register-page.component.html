@@ -1,1 +1,178 @@
-<p>register-page works!</p>
+<div class="p-5 shadow-xl bg-base-200">
+  <h1 class="text-2xl mb-2 font-boldb-6 text-center">Sign Up</h1>
+
+  <!-- Error -->
+  @if (hasError()) {
+  <div role="alert" class="alert alert-error alert-soft mb-3">
+    <p>Verify that the email or username is not registered.</p>
+  </div>
+  }
+
+  <form
+    class="space-y-4 w-100"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <!-- Email Input -->
+    <div>
+      <label class="input w-full">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </g>
+        </svg>
+        <input
+          width="100px"
+          type="email"
+          placeholder="mail@site.com"
+          formControlName="email"
+        />
+      </label>
+      @if (formUtils.isValidField(registerForm, 'email')) {
+      <div class="text-xs text-error mt-2">
+        {{ formUtils.getFielError(registerForm, "email") }}
+      </div>
+      }
+    </div>
+
+    <!-- FullName -->
+    <div>
+      <label class="input w-full">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </g>
+        </svg>
+        <input
+          type="text"
+          placeholder="Username"
+          formControlName="fullName"
+          title="Only letters, numbers or dash"
+        />
+      </label>
+      @if (formUtils.isValidField(registerForm, 'fullName')) {
+      <div class="text-xs text-error mt-2">
+        {{ formUtils.getFielError(registerForm, "fullName") }}
+      </div>
+      }
+    </div>
+
+    <!-- Password input -->
+    <div>
+      <label class="input w-full">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+            ></path>
+            <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+          </g>
+        </svg>
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          title="Must be more than 6 characters, including number, lowercase letter, uppercase letter"
+        />
+      </label>
+      @if (formUtils.isValidField(registerForm, 'password')) {
+      <div class="text-xs text-error mt-2">
+        {{ formUtils.getFielError(registerForm, "password") }}
+      </div>
+      }
+    </div>
+
+    <!-- Confirm Password input -->
+    <div>
+      <label class="input w-full">
+        <svg
+          class="h-[1em] opacity-50"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke-width="2.5"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+            ></path>
+            <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+          </g>
+        </svg>
+        <input
+          type="password"
+          placeholder="Confirm password"
+          formControlName="confirmPassword"
+          title="Repeat password"
+        />
+      </label>
+      @if (registerForm.errors && registerForm.touched) {
+      <span class="text-xs text-error mt-2">
+        Las contraseñas no coinciden
+      </span>
+      }
+    </div>
+
+    <div class="flex items-center justify-between">
+      <label class="flex items-center">
+        <input
+          formControlName="rememberMe"
+          type="checkbox"
+          class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          formControlName="rememberLogin"
+        />
+        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+      </label>
+    </div>
+
+    <button type="submit" [disabled]="isValidForm" class="btn btn-soft w-full">
+      Sing Up
+    </button>
+  </form>
+
+  <div class="mt-6 text-center text-sm text-gray-600">
+    You have an account?
+    <a
+      routerLink="/auth/login"
+      class="text-indigo-600 hover:text-indigo-500 font-medium"
+    >
+      Sign in
+    </a>
+  </div>
+</div>

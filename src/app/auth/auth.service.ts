@@ -36,6 +36,21 @@ export class AuthService {
     );
   }
 
+  register(form: { email: string; password: string, fullName: string }, rememberLogin: boolean) {
+    return this.http.post<AuthResponse>(this.URL + 'auth/', form).pipe(
+      tap((resp) => {
+        this.handleLoginSuccess(resp, rememberLogin);
+      }),
+      map(() => true),
+      catchError((error: any) => {
+        console.error(error);
+
+        this.logout();
+        return of(false);
+      })
+    );
+  }
+
   authStatus = computed<AuthStatus>(() => {
     if (this._authStatus() === 'checking') return 'checking';
 
