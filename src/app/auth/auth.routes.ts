@@ -10,6 +10,7 @@ export const authRoutes: Routes = [
     children: [
       {
         path: 'login',
+        title: 'login',
         loadComponent: () =>
           import('./pages/login-page/login-page.component').then(
             (m) => m.LoginPageComponent
@@ -17,6 +18,7 @@ export const authRoutes: Routes = [
       },
       {
         path: 'register',
+        title: 'register',
         loadComponent: () =>
           import('./pages/register-page/register-page.component').then(
             (m) => m.RegisterPageComponent

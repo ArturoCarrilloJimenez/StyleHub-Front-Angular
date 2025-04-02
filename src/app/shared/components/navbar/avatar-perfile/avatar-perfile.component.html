@@ -1,0 +1,21 @@
+@if (authStatus() == 'authenticated') {
+<div tabindex="0" role="button" class="avatar avatar-placeholder">
+  <div class="bg-base-300 text-base w-12 rounded-full">
+    <span>{{ firsLetterUserName() |  uppercase }}</span>
+  </div>
+</div>
+<ul
+  tabindex="0"
+  class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+>
+  <li>
+    <a class="justify-between">
+      Profile
+      <span class="badge">New</span>
+    </a>
+  </li>
+  <li><button (click)="logout()" >Logout</button></li>
+</ul>
+} @else {
+<button routerLink="/auth/login" class="btn btn-outline">Sign In</button>
+}

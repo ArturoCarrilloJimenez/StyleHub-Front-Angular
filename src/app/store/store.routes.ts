@@ -10,6 +10,7 @@ export const storeRoutes: Routes = [
     children: [
       {
         path: '',
+        title: 'home',
         loadComponent: () =>
           import('./pages/home-page/home-page.component').then(
             (m) => m.HomePageComponent
