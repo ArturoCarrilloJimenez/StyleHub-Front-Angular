@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { AuthService } from '../../../../auth/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'shared-navbar-avatar-perfile',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink ,RouterLinkActive ,CommonModule],
   templateUrl: './avatar-perfile.component.html',
   styleUrl: './avatar-perfile.component.scss',
 })
