@@ -1,17 +1,15 @@
-<header>
-  <img
-    id="homeImage"
-    class="opacity-50 grayscale-50 shadow"
-    src="/images/home-portada.jpg"
-    alt="home-image"
-  />
-  <div id="contend" class="flex justify-center items-center h-screen">
-    <div class="text-center p-4">
-      <h1 class="text-6xl mb-4 font-extrabold sm:text-8xl"> {{ title }} </h1>
-      <p class="text-l mb-5">
+<div
+  id="hero"
+  class="hero"
+  style="background-image: url(/images/home-portada.jpg);">
+  <div class="hero-overlay"></div>
+  <div class="hero-content text-neutral-content text-center">
+    <div class="max-w-md">
+      <h1 class="mb-5 text-6xl mb-4 font-extrabold sm:text-8xl">{{ title }}</h1>
+      <p class="mb-5">
         Make every outfit a style statement, only on StyleHub.
       </p>
-      <button class="btn btn-outline text-l font-bold">Show product</button>
+      <button class="btn btn-primary">Show product</button>
     </div>
   </div>
-</header>
+</div>

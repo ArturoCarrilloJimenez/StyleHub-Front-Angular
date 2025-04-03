@@ -1,0 +1,19 @@
+<div class="card bg-base-100 w-90 shadow-sm">
+  <figure>
+    <shared-lazy-image [url]="product.images[0]" [alterText]="product.title"></shared-lazy-image>
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">
+      {{ product.title }}
+      <!-- // TODO sacar la fecha de creación y si ha pasada menos de 7 Dias poner etiqueta New -->
+      <!-- <div class="badge badge-secondary">NEW</div> -->
+    </h2>
+    <p>{{ product.description | limitCharacterText: 150 }}</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary">
+        Add card
+      </button>
+      <button class="btn btn-outline btn-primary">Details</button>
+    </div>
+  </div>
+</div>
