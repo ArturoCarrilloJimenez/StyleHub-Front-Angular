@@ -1,20 +1,30 @@
 @if (authStatus() == 'authenticated') {
-<div tabindex="0" role="button" class="avatar avatar-placeholder">
-  <div class="bg-base-300 text-base w-12 rounded-full">
-    <span>{{ firsLetterUserName() |  uppercase }}</span>
-  </div>
+<div tabindex="0" role="button">
+  <shared-profile-avatar-image></shared-profile-avatar-image>
 </div>
 <ul
   tabindex="0"
-  class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+  class="dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
 >
-  <li>
-    <a class="justify-between" routerLink="/profile"  routerLinkActive="menu-active" [routerLinkActiveOptions]="{exact: true}">
-      Profile
-      <span class="badge">New</span>
-    </a>
+  <li class="flex flex-row items-center px-2">
+    <shared-profile-avatar-image></shared-profile-avatar-image>
+    <h1>{{ username() | titlecase | limitCharacterText : 15 }}</h1>
   </li>
-  <li><button (click)="logout()" >Logout</button></li>
+  <hr class="text-base-300" />
+  <li class="menu menu-sm w-full">
+    <div>
+      <a
+        class="justify-between"
+        routerLink="/profile"
+        routerLinkActive="menu-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Profile
+        <span class="badge">New</span>
+      </a>
+    </div>
+    <div><button (click)="logout()">Logout</button></div>
+  </li>
 </ul>
 } @else {
 <button routerLink="/auth/login" class="btn btn-outline">Sign In</button>

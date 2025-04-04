@@ -2,11 +2,13 @@ import { Component, signal } from '@angular/core';
 import { AuthService } from '../../../../auth/auth.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LimitCharacterTextPipe } from '../../../pipes/limit-character-text.pipe';
+import { AvatarImageComponent } from "../../profile/avatar-image/avatar-image.component";
 
 @Component({
   selector: 'shared-navbar-avatar-perfile',
   standalone: true,
-  imports: [RouterLink ,RouterLinkActive ,CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, LimitCharacterTextPipe, AvatarImageComponent],
   templateUrl: './avatar-perfile.component.html',
   styleUrl: './avatar-perfile.component.scss',
 })
@@ -21,15 +23,8 @@ export class AvatarPerfileComponent {
     return this.authService.authStatus();
   }
 
-  firsLetterUserName(): string {
-    const user = this.authService.user;
-    const fullName = user()?.fullName.split(' ');
-
-    if (!fullName) return ''
-
-    return fullName.length >= 2
-      ? `${fullName[0][0]}${fullName[1][0]}`
-      : `${fullName[0][0]}`;
+  username() {
+    return this.authService.user()?.fullName
   }
 
   logout() {
