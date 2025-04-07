@@ -7,12 +7,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
 import { FormUtils } from '../../../utils/form-utils';
+
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { heroEnvelope, heroKey, heroUser } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, NgIcon],
+  viewProviders: [provideIcons({ heroEnvelope, heroKey, heroUser })],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
 })

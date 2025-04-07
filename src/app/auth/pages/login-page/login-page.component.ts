@@ -6,13 +6,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
 import { FormUtils } from '../../../utils/form-utils';
 import { AuthService } from '../../auth.service';
+
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { heroEnvelope, heroKey } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, NgIcon],
+  viewProviders: [provideIcons({ heroEnvelope, heroKey })],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
 })
