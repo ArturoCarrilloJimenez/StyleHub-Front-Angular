@@ -1,13 +1,12 @@
 <div class="navbar bg-base-100 shadow-sm sticky top-0 z-200">
-  <div class="navbar-start">
-    <shared-navbar-dropdown-menu></shared-navbar-dropdown-menu>
-  </div>
-  <div class="navbar-center">
+  <div class="navbar-start ml-2">
     <a routerLink="/" class="font-semibold text-xl">{{ title }}</a>
   </div>
+  <div class="navbar-center"></div>
   <div class="navbar-end">
-    <div class="dropdown dropdown-end mr-2">
+    <div class="dropdown dropdown-end">
       <shared-navbar-avatar-perfile></shared-navbar-avatar-perfile>
     </div>
+    <shared-navbar-dropdown-menu></shared-navbar-dropdown-menu>
   </div>
 </div>

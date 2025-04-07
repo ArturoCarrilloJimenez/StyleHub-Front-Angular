@@ -1,13 +1,21 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { ProductResponse } from './interfaces/product-response.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environments';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
+import {
+  ActivatedRouteSnapshot,
+  MaybeAsync,
+  RedirectCommand,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
+
   private URL = environment.baseUrl;
 
   private _products = signal<ProductResponse[]>([]);
@@ -19,7 +27,7 @@ export class ProductsService {
   getProducts() {
     return this.http.get<ProductResponse[]>(this.URL + 'products').pipe(
       tap((resp) => {
-        this._products.set(resp)
+        this._products.set(resp);
       }),
       map((resp) => resp),
       catchError((error: any) => {
