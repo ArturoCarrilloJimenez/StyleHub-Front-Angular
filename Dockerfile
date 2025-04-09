@@ -12,7 +12,7 @@ RUN npm run build --prod
 
 FROM nginx:alpine
 
-COPY --from=build /app/dist/mi-aplicacion-angular /usr/share/nginx/html
+COPY --from=build /app/dist/style-hub-front-angular /usr/share/nginx/html
 
 EXPOSE 80
 
