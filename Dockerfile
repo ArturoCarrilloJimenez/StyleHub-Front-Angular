@@ -1,17 +1,19 @@
-FROM node:22.14.0
+FROM node:22.14.0 AS build
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
-
-RUN npm install -g @angular/cli
 
 RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build --prod
 
-EXPOSE 3000
+FROM nginx:alpine
 
-CMD ["node", "dist/main"]
+COPY --from=build /app/dist/mi-aplicacion-angular /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
