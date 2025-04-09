@@ -1,4 +1,4 @@
 export const environment = {
-  baseUrl: 'http://localhost:3000/api/v1/',
-  title: 'StyleHub'
+  baseUrl: process.env['BASE_URL_API'],
+  title: process.env['TITLE'],
 };
