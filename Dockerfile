@@ -2,17 +2,20 @@ FROM node:22.14.0 AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json /app/
 
 RUN npm install
 
-COPY . .
+COPY . /app/
 
 RUN npm run build --prod
 
-FROM nginx:alpine
+# Etapa 2: Servir la aplicación
+FROM nginx:latest
 
-COPY --from=build /app/dist/style-hub-front-angular /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html/
+
+COPY --from=build /app/dist/style-hub-front-angular/browser ./
 
 EXPOSE 80
 
