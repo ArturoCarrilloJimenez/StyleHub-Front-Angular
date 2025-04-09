@@ -39,11 +39,11 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag ${{ secrets.IMAGE_NAME }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:api
+          docker tag ${{ secrets.IMAGE_NAME }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:front
 
       - name: Push Docker image to DockerHub
         run: |
-          docker push  ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:api
+          docker push  ${{ secrets.DOCKER_USERNAME }}/${{ secrets.IMAGE_NAME }}:front
 
   Deploy-Render:
     needs: Build
