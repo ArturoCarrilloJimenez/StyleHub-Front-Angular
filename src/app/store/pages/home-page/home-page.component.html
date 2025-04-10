@@ -1,1 +1,27 @@
 <store-home-initial-image></store-home-initial-image>
+<div class="mt-8">
+  <store-home-informative-composition></store-home-informative-composition>
+</div>
+<section class="text-center mt-8">
+  <h1 class="mb-5 text-center text-4xl mb-4 font-bold">Products</h1>
+  @if (isLoading()) {
+  <shared-loading></shared-loading>
+  <p class="mt-1">Charge products</p>
+  } @else { @if (products().length == 0) {
+  <p>No products available, please try again later.</p>
+  }
+  <div
+    class="container mx-auto px-4 grid justify-items-center gap-4 sm:grid-cols-2 xl:grid-cols-4"
+  >
+    @for (product of products(); track $index) {
+    <shop-product-card
+      [product]="product"
+      [urlPage]="'products'"
+    ></shop-product-card>
+    }
+  </div>
+  }
+  <button [routerLink]="['/products']" class="btn btn-primary mt-4">
+    SHOW MORE
+  </button>
+</section>

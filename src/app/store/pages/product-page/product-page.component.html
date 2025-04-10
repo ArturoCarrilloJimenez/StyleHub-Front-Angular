@@ -10,7 +10,7 @@
     class="container mx-auto px-4 grid justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
   >
     @for (product of products(); track $index) {
-    <shop-product-card [product]="product"></shop-product-card>
+    <shop-product-card [product]="product" [urlPage]="'products'"></shop-product-card>
     }
   </div>
   }

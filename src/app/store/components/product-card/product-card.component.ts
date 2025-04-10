@@ -24,6 +24,7 @@ export class ProductCardComponent implements OnInit {
   images = signal<ImageProduct[]>([]);
 
   @Input() product!: ProductResponse;
+  @Input() urlPage = '';
 
   ngOnInit(): void {
     this.images.set(
@@ -47,6 +48,6 @@ export class ProductCardComponent implements OnInit {
   }
 
   addCart() {
-    throw new Error('Método no implementado')
+    throw new Error('Método no implementado');
   }
 }
