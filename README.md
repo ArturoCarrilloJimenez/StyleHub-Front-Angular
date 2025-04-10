@@ -30,4 +30,4 @@ This will compile your project and store the build artifacts in the `dist/` dire
 ## Stay in touch ✒️
 
 - Author - Arturo Carrillo Jimenez
-- Website - [stylehub-bgor.onrender.com/](stylehub-bgor.onrender.com/)
+- Website - [https://stylehub-bgor.onrender.com/](https://stylehub-bgor.onrender.com/)
