@@ -13,7 +13,6 @@ import { AvatarImageComponent } from "../../profile/avatar-image/avatar-image.co
   styleUrl: './avatar-perfile.component.scss',
 })
 export class AvatarPerfileComponent {
-  // TODO Añadir enlace cuando se cree la pagina de perfil
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router

@@ -1,0 +1,17 @@
+<store-products-init-image></store-products-init-image>
+<section class="text-center mt-5">
+  @if (isLoading()) {
+  <shared-loading></shared-loading>
+  <p class="mt-1">Charge products</p>
+  } @else { @if (products().length == 0) {
+  <p>No products available, please try again later.</p>
+  }
+  <div
+    class="container mx-auto px-4 grid justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+  >
+    @for (product of products(); track $index) {
+    <shop-product-card [product]="product"></shop-product-card>
+    }
+  </div>
+  }
+</section>

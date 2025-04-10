@@ -10,4 +10,6 @@ export interface ProductResponse {
   gender: string;
   tags: string[];
   images: string[];
+  insertDate: Date;
+  updateDate: Date;
 }
