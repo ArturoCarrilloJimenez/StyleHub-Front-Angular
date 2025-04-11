@@ -1,4 +1,4 @@
-FROM node:22.14.0 AS build
+FROM node:18 AS build
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . /app/
 
-RUN npm run build
+RUN npm run build --prod
 
 # Etapa 2: Servir la aplicación
 FROM nginx:latest
