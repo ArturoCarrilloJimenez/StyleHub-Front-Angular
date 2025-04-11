@@ -1,4 +1,4 @@
-FROM node:18 AS build
+FROM node:22.14.0 AS build
 
 WORKDIR /app
 
@@ -6,9 +6,11 @@ COPY package.json /app/
 
 RUN npm install
 
+RUN npm update
+
 COPY . /app/
 
-RUN npm run build --prod --legacy-peer-deps --force
+RUN npm run build --prod
 
 # Etapa 2: Servir la aplicación
 FROM nginx:latest
