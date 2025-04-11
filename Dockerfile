@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . /app/
 
-RUN npm run build --prod
+RUN npm run build --prod --legacy-peer-deps
 
 # Etapa 2: Servir la aplicación
 FROM nginx:latest
