@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { ImageProduct } from '../../interfaces/images-products.interface';
 
 @Component({
@@ -10,5 +10,11 @@ import { ImageProduct } from '../../interfaces/images-products.interface';
 })
 export class CarouselProductComponent {
   @Input() images: ImageProduct[] = [];
-  @Input() urlPage = ''
+  @Input() urlPage = '';
+
+  currentImageIndex = signal(0);
+
+  changeImage(index: number) {
+    this.currentImageIndex.set(index);
+  }
 }

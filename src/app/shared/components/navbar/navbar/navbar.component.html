@@ -6,7 +6,9 @@
     <a routerLink="/" class="font-semibold text-xl">{{ title }}</a>
   </div>
   <div class="navbar-end space-x-4">
-    <shared-navbar-cart></shared-navbar-cart>
+    <div class="dropdown dropdown-end">
+      <store-cart></store-cart>
+    </div>
     <div class="dropdown dropdown-end">
       <shared-navbar-avatar-perfile></shared-navbar-avatar-perfile>
     </div>

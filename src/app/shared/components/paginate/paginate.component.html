@@ -1,0 +1,26 @@
+<div *ngIf="lastPage != null && lastPage > 0" class="join mx-6">
+  <button
+    class="join-item btn btn-primary previous-btn"
+    [disabled]="prevPage == null"
+    (click)="sendPage(prevPage)"
+  >
+    Previous
+  </button>
+  <button
+    *ngFor="let page of pages"
+    class="join-item btn"
+    (click)="sendPage(page + 1)"
+    [disabled]="page == -1 || currentPage == page + 1"
+  >
+    @if (page == -1) { . . . } @else {
+    {{ page + 1 }}
+    }
+  </button>
+  <button
+    class="join-item btn btn-primary next-btn"
+    [disabled]="nextPage == null"
+    (click)="sendPage(nextPage)"
+  >
+    Next
+  </button>
+</div>
