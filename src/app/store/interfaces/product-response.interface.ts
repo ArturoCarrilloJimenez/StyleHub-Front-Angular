@@ -1,4 +1,14 @@
-export interface ProductResponse {
+export interface ProductsResponse {
+  statusCode: string;
+  data: Product[];
+  count: number;
+  currentPage: number;
+  nextPage: number | null;
+  prevPage: number | null;
+  lastPage: number;
+}
+
+export interface Product {
   id: string;
   title: string;
   price: number;
@@ -6,8 +16,10 @@ export interface ProductResponse {
   slug: string;
   stock: number;
   sizes: string[];
-  type: string;
   gender: string;
-  tags: string[];
   images: string[];
+  isActive: boolean;
+  insertDate: Date;
+  updateDate: Date;
+  type: string;
 }

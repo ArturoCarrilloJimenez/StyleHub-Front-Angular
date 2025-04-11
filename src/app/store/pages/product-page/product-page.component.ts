@@ -1,26 +1,21 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { InitialImageHomeComponent } from '../../components/initial-image-home/initial-image-home.component';
-import { ProductsService } from '../../products.service';
+import { Component, signal } from '@angular/core';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
+import { ProductsService } from '../../products.service';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
-import { RouterLink } from '@angular/router';
-import { InformativeCompositionHomeComponent } from '../../components/informative-composition-home/informative-composition-home.component';
+import { InitImageProductsComponent } from '../../components/init-image-products/init-image-products.component';
 
 @Component({
-  selector: 'app-home-page',
-  standalone: true,
+  selector: 'app-product-page',
   imports: [
-    InitialImageHomeComponent,
     ProductCardComponent,
     LoadingCardComponent,
-    RouterLink,
-    InformativeCompositionHomeComponent,
+    InitImageProductsComponent,
   ],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss',
+  templateUrl: './product-page.component.html',
+  styleUrl: './product-page.component.scss',
 })
-export class HomePageComponent implements OnInit {
+export class ProductPageComponent {
   products = signal<ProductsResponse | null>(null);
   isLoading = signal(true);
 
@@ -30,7 +25,7 @@ export class HomePageComponent implements OnInit {
     this.products.set(this.productsService.products());
 
     if (this.products() == null)
-      this.productsService.getProducts(4).subscribe(() => {
+      this.productsService.getProducts().subscribe(() => {
         this.products.set(this.productsService.products());
         this.isLoading.set(false);
       });

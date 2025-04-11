@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { environment } from '../../environments/environments';
 
 export const profileRoutes: Routes = [
   {
@@ -10,7 +11,7 @@ export const profileRoutes: Routes = [
     children: [
       {
         path: '',
-        title: 'Edit profile',
+        title: `Profile | ${environment.title}`,
         loadComponent: () =>
           import('./pages/edit-pages/edit-pages.component').then(
             (m) => m.EditPagesComponent

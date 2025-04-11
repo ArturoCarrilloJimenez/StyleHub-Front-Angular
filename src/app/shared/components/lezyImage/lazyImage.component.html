@@ -1,6 +1,3 @@
-<div class="d-flex justify-content-center">
+<div *ngIf="!hasLoads()" class="skeleton h-50 w-100"></div>
 
-  <div *ngIf="!hasLoads()" class="skeleton h-50 w-100"></div>
-
-  <img [src]="url" [alt]="alterText" (load)="onLoad()" class="card-img-top animate__animated animate__fadeIn">
-</div>
+<img [src]="url" [alt]="alterText" (load)="onLoad()">

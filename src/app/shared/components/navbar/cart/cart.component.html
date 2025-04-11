@@ -1,0 +1,12 @@
+<a
+  *ngIf="authStatus() == 'authenticated'"
+  tabindex="0"
+  role="button"
+  class="btn btn-ghost btn-circle"
+  [routerLink]="['/cart']" routerLinkActive="router-link-active"
+>
+  <div class="indicator">
+    <ng-icon name="heroShoppingCartMini" size="1.5rem"></ng-icon>
+    <span class="badge badge-sm indicator-item">8</span>
+  </div>
+</a>

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { environment } from '../../environments/environments';
 
 export const authRoutes: Routes = [
   {
@@ -10,7 +11,7 @@ export const authRoutes: Routes = [
     children: [
       {
         path: 'login',
-        title: 'login',
+        title: `Login | ${environment.title}`,
         loadComponent: () =>
           import('./pages/login-page/login-page.component').then(
             (m) => m.LoginPageComponent
@@ -18,7 +19,7 @@ export const authRoutes: Routes = [
       },
       {
         path: 'register',
-        title: 'register',
+        title: `Register | ${environment.title}`,
         loadComponent: () =>
           import('./pages/register-page/register-page.component').then(
             (m) => m.RegisterPageComponent
