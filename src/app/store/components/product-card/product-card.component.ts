@@ -1,5 +1,5 @@
 import { Component, Input, LOCALE_ID, OnInit, signal } from '@angular/core';
-import { ProductResponse } from '../../interfaces/product-response.interface';
+import { Product } from '../../interfaces/product-response.interface';
 import { environment } from '../../../../environments/environments';
 import { LimitCharacterTextPipe } from '../../../shared/pipes/limit-character-text.pipe';
 import { CarouselProductComponent } from '../carousel-product/carousel-product.component';
@@ -23,7 +23,7 @@ export class ProductCardComponent implements OnInit {
   private base = environment.baseUrl;
   images = signal<ImageProduct[]>([]);
 
-  @Input() product!: ProductResponse;
+  @Input() product!: Product;
   @Input() urlPage = '';
 
   ngOnInit(): void {

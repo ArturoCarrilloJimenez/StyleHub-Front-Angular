@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { IsAuthenticated } from '../auth/guards/is-authenticated.guard';
+import { environment } from '../../environments/environments';
 
 export const storeRoutes: Routes = [
   {
@@ -11,7 +12,7 @@ export const storeRoutes: Routes = [
     children: [
       {
         path: '',
-        title: 'home',
+        title: `Home | ${environment.title}`,
         loadComponent: () =>
           import('./pages/home-page/home-page.component').then(
             (m) => m.HomePageComponent
@@ -19,7 +20,7 @@ export const storeRoutes: Routes = [
       },
       {
         path: 'products',
-        title: 'products',
+        title: `Products | ${environment.title}`,
         loadComponent: () =>
           import('./pages/product-page/product-page.component').then(
             (m) => m.ProductPageComponent
@@ -27,7 +28,7 @@ export const storeRoutes: Routes = [
       },
       {
         path: 'cart',
-        title: 'cart',
+        title: `Cart | ${environment.title}`,
         loadComponent: () =>
           import('./cart/cart.component').then((m) => m.CartComponent),
         canMatch: [IsAuthenticated],
