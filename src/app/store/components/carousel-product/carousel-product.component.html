@@ -4,18 +4,19 @@
     <div
       [id]="`${item.alt}${$index}`"
       class="carousel-item object-cover h-full w-full"
+      [class.active]="$index === currentImageIndex()"
     >
       <img [src]="item.url" [alt]="item.alt" />
     </div>
     }
   </div>
-  <div class="absolute bottom-4 left-0 flex w-full gap-2 px-2">
+  <div class="absolute bottom-4 flex w-full gap-2 px-2">
     @for (item of images; track $index) {
-    <a
-      [href]="`${urlPage}#${item.alt}${$index}`"
-      class="btn btn-soft btn-xs rounded-full btn-circle"
-    >
-    </a>
+    <button
+    (click)="changeImage($index)"
+    class="btn btn-soft btn-xs rounded-full btn-circle"
+    [class.opacity-50]="$index === currentImageIndex()"
+    ></button>
     }
   </div>
 </div>

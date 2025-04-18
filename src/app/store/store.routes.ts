@@ -26,13 +26,6 @@ export const storeRoutes: Routes = [
             (m) => m.ProductPageComponent
           ),
       },
-      {
-        path: 'cart',
-        title: `Cart | ${environment.title}`,
-        loadComponent: () =>
-          import('./cart/cart.component').then((m) => m.CartComponent),
-        canMatch: [IsAuthenticated],
-      },
     ],
   },
   {

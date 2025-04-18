@@ -4,7 +4,7 @@ import { DropdownMenuComponent } from '../dropdown-menu/dropdown-menu.component'
 import { environment } from '../../../../../environments/environments';
 import { AvatarPerfileComponent } from "../avatar-perfile/avatar-perfile.component";
 import { RouterLink } from '@angular/router';
-import { CartComponent } from "../cart/cart.component";
+import { CartComponent } from "../../../../store/cart/cart.component";
 
 @Component({
   selector: 'shared-navbar',

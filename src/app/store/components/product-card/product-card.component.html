@@ -2,7 +2,10 @@
   class="card bg-base-100 w-full h-full shadow-sm rounded-lg overflow-hidden text-start"
 >
   <figure>
-    <shared-carousel-product [images]="images()" [urlPage]="urlPage"></shared-carousel-product>
+    <shared-carousel-product
+      [images]="images()"
+      [urlPage]="urlPage"
+    ></shared-carousel-product>
   </figure>
   <div class="card-body p-4">
     <!-- TODO cambiar por ruta de detalles producto -->
@@ -19,10 +22,17 @@
     </p>
 
     <div class="flex justify-around items-center">
-      <p class="text-2xl font-bold">{{ product.price | currency: 'EUR'  : 'symbol' }}</p>
+      <p class="text-2xl font-bold">
+        {{ product.price | currency : "EUR" : "symbol" }}
+      </p>
       <div class="card-actions">
         <!-- TODO validar que este auth cunado añada producto -->
-        <button class="btn btn-outline btn-primary rounded-full">ADD TO CART</button>
+        <button
+          class="btn btn-outline btn-primary rounded-full"
+          (click)="addCart(product.id)"
+        >
+          ADD TO CART
+        </button>
       </div>
     </div>
   </div>

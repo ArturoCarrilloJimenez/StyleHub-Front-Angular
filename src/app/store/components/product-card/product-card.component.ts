@@ -5,7 +5,8 @@ import { LimitCharacterTextPipe } from '../../../shared/pipes/limit-character-te
 import { CarouselProductComponent } from '../carousel-product/carousel-product.component';
 import { ImageProduct } from '../../interfaces/images-products.interface';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'shop-product-card',
@@ -25,6 +26,11 @@ export class ProductCardComponent implements OnInit {
 
   @Input() product!: Product;
   @Input() urlPage = '';
+
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.images.set(
@@ -47,7 +53,12 @@ export class ProductCardComponent implements OnInit {
     return days <= 15 ? true : false;
   }
 
-  addCart() {
-    throw new Error('Método no implementado');
+  addCart(id: string) {
+    if (this.authService.authStatus() !== 'authenticated') {
+      this.router.navigateByUrl('/auth/login')
+      return
+    }
+
+    // TODO Añadir servicio para añadir al carrito
   }
 }

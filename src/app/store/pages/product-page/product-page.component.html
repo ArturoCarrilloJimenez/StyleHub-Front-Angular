@@ -10,8 +10,20 @@
     class="container mx-auto px-4 grid justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
   >
     @for (product of products()?.data; track $index) {
-    <shop-product-card [product]="product" [urlPage]="'products'"></shop-product-card>
+    <shop-product-card
+      [product]="product"
+      [urlPage]="'products'"
+    ></shop-product-card>
     }
+  </div>
+  <div class="mt-6">
+    <shared-paginate
+      [currentPage]="products()!.currentPage"
+      [lastPage]="products()!.lastPage"
+      [prevPage]="products()!.prevPage"
+      [nextPage]="products()!.nextPage"
+      (emite)="chargeProduct($event)"
+    ></shared-paginate>
   </div>
   }
 </section>
