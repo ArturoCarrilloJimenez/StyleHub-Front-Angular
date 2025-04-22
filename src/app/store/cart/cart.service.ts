@@ -43,4 +43,32 @@ export class CartService {
         })
       );
   }
+
+  deleteProduct(product: string) {
+    return this.httpClient.delete<CartResponse>(`${this.BASE}cart/${product}`).pipe(
+      tap((resp) => {
+        this._cart.set(resp);
+      }),
+      map((resp) => resp),
+      catchError((error: any) => {
+        return of({
+          error:
+            'It was not possible delete product of cart. Please try again later.',
+        });
+      })
+    );
+  }
+
+  deleteCart() {
+    this.httpClient.delete(`${this.BASE}cart`).pipe(
+      tap(() => {
+        this._cart.set(null);
+      }),
+      catchError((error: any) => {
+        return of({
+          error: 'It was not possible delete cart. Please try again later.',
+        });
+      })
+    ).subscribe();
+  }
 }

@@ -17,7 +17,6 @@ import { ProductCartComponent } from './components/product-cart/product-cart.com
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
-// TODO hacer pag de cart y orientadlo para ordenar en un futuro ordenes
 export class CartComponent implements OnInit {
   cart = computed<CartResponse | null>(() => this.cartService.cart());
 
