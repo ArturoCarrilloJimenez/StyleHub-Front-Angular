@@ -46,7 +46,7 @@ export class ProductCartComponent implements OnInit {
     this.timeoutId = setTimeout(() => {
       if (this.quantity() <= 0) this.deleteProduct(idProduct)
       else this.cartService.setProduct(idProduct, this.quantity()).subscribe()
-    }, 1000);
+    }, 250);
   }
 
   deleteProduct(idProduct: string) {
