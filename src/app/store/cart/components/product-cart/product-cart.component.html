@@ -1,0 +1,37 @@
+<div class="flex gap-4 px-4 py-6 rounded-md shadow">
+  <div class="flex gap-6 sm:gap-4 max-sm:flex-col w-full">
+    <div class="w-24 h-24 max-sm:w-24 max-sm:h-24 shrink-0">
+      <img [src]="urlImage" [alt]="product.product.title" class="rounded-md" />
+    </div>
+    <div class="flex flex-col gap-4 w-full">
+      <div class="flex justify-between items-center">
+        <h3 class="text-base font-semibold md:text-lg">
+          {{ product.product.title | limitCharacterText : 20 }}
+        </h3>
+        <ng-icon name="heroTrash" size="1.5rem"></ng-icon>
+      </div>
+      <div class="mt-auto flex justify-between items-center">
+        <h3 class="text-base font-semibold">
+          {{ product.product.price | currency : "EUR" : "symbol" }}
+        </h3>
+        <div class="flex items-center">
+          <button
+            type="button"
+            class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
+            (click)="deleteOneToCart(product.product.id)"
+          >
+            -
+          </button>
+          <span class="text-lg px-4 font-bold">{{ quantity() }}</span>
+          <button
+            type="button"
+            class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
+            (click)="addOneToCart(product.product.id)"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { ImageProduct } from '../../interfaces/images-products.interface';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'shop-product-card',
@@ -29,7 +30,8 @@ export class ProductCardComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -55,10 +57,10 @@ export class ProductCardComponent implements OnInit {
 
   addCart(id: string) {
     if (this.authService.authStatus() !== 'authenticated') {
-      this.router.navigateByUrl('/auth/login')
-      return
+      this.router.navigateByUrl('/auth/login');
+      return;
     }
 
-    // TODO Añadir servicio para añadir al carrito
+    this.cartService.setProduct(id).subscribe();
   }
 }

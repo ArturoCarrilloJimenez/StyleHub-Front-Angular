@@ -1,23 +1,33 @@
 <div
-  *ngIf="authStatus() == 'authenticated'"
+  *ngIf="authStatus() == 'authenticated' && cart != null"
   tabindex="0"
   role="button"
   class="btn btn-ghost btn-circle"
 >
   <div class="indicator">
     <ng-icon name="heroShoppingCartMini" size="1.5rem"></ng-icon>
-    <span class="badge badge-sm indicator-item">8</span>
+    <span class="badge badge-sm indicator-item">{{
+      cart()?.products?.length | number
+    }}</span>
   </div>
 </div>
 <div
   tabindex="0"
-  class="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
+  class="card card-compact dropdown-content bg-base-100 z-1 mt-3 shadow translate-x-10 w-74 h-100 sm:w-100 md:w-150"
 >
-  <div class="card-body">
-    <span class="text-lg font-bold">8 Items</span>
-    <span class="text-info">Subtotal: $999</span>
+  <div class="card-body overflow-y-auto">
+    @if (cart()?.products!.length > 0) {
+    <shop-cart-product
+      *ngFor="let item of cart()?.products; let i = index"
+      [product]="item"
+    ></shop-cart-product>
+    } @else {
+    <p class="text-xl font-bold text-center">Oh, you have no added products</p>
     <div class="card-actions">
-      <button class="btn btn-primary btn-block">View cart</button>
+      <button class="btn btn-primary btn-block" routerLink="/products">
+        View Products
+      </button>
     </div>
+    }
   </div>
 </div>
