@@ -1,21 +1,19 @@
-FROM node:22-alpine AS build
+# Etapa 1: Construcción
+FROM node:18 AS build
 
 WORKDIR /app
 
-COPY package.json /app/
+COPY package.json package-lock.json* ./
+RUN npm install
 
-RUN npm install --legacy-peer-deps
+COPY . .
 
-RUN npm update
-
-COPY . /app/
-
-RUN npm run build --prod || cat /app/angular.log
+RUN npx ng build --configuration=production
 
 # Etapa 2: Servir la aplicación
-FROM nginx:latest
+FROM nginx:stable-alpine
 
-WORKDIR /usr/share/nginx/html/
+WORKDIR /usr/share/nginx/html
 
 COPY --from=build /app/dist/style-hub-front-angular/browser ./
 
