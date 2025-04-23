@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . /app/
 
-RUN npm run build
+RUN npm run build --prod || cat /app/angular.log
 
 # Etapa 2: Servir la aplicación
 FROM nginx:latest
