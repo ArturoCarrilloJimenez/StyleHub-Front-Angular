@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
 import { ProductsService } from '../../products.service';
-import { ProductCardComponent } from '../../components/product-card/product-card.component';
+import {
+  ProductCardComponent,
+  InitImageProductsComponent,
+} from '../../components/';
 import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
-import { InitImageProductsComponent } from '../../components/init-image-products/init-image-products.component';
 import { PaginateComponent } from '../../../shared/components/paginate/paginate.component';
 @Component({
   selector: 'app-product-page',
@@ -30,7 +32,7 @@ export class ProductPageComponent {
   }
 
   chargeProduct(page: number = 1, limit: number = 12) {
-      this.isLoading.set(true);
+    this.isLoading.set(true);
 
     this.productsService.getProducts(limit, page).subscribe(() => {
       this.products.set(this.productsService.products());

@@ -8,7 +8,12 @@
         <h3 class="text-base font-semibold md:text-lg">
           {{ product.product.title | limitCharacterText : 20 }}
         </h3>
-        <button class="btn btn-sm btn-circle  btn-soft btn-error" (click)="deleteProduct(product.product.id)"><ng-icon name="heroTrash" size="1.5rem"></ng-icon></button>
+        <button
+          class="btn btn-sm btn-circle btn-soft btn-error"
+          (click)="deleteProduct(product.product.id)"
+        >
+          <ng-icon name="heroTrash" size="1.5rem"></ng-icon>
+        </button>
       </div>
       <div class="mt-auto flex justify-between items-center">
         <h3 class="text-base font-semibold">
@@ -19,7 +24,7 @@
             type="button"
             class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
             (click)="updateQuantity(product.product.id, false)"
-            [disabled]="quantity() <= 0"
+            [disabled]="quantity() <= 0 || isServerUpdate()"
           >
             -
           </button>
@@ -28,6 +33,7 @@
             type="button"
             class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
             (click)="updateQuantity(product.product.id)"
+            [disabled]="isServerUpdate()"
           >
             +
           </button>

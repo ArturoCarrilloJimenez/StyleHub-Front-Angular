@@ -28,6 +28,7 @@ export class ProductCartComponent implements OnInit {
   quantity = signal(0);
 
   timeoutId: any = null;
+  isServerUpdate = signal(false);
 
   @Input() product!: ProductCart;
 
@@ -44,12 +45,18 @@ export class ProductCartComponent implements OnInit {
     if (this.timeoutId !== null) clearTimeout(this.timeoutId);
 
     this.timeoutId = setTimeout(() => {
-      if (this.quantity() <= 0) this.deleteProduct(idProduct)
-      else this.cartService.setProduct(idProduct, this.quantity()).subscribe()
-    }, 250);
+      if (this.quantity() <= 0) this.deleteProduct(idProduct);
+      else {
+        this.isServerUpdate.set(true);
+        this.cartService
+          .setProduct(idProduct, this.quantity())
+          .subscribe(() => this.isServerUpdate.set(false));
+      }
+    }, 750);
   }
 
   deleteProduct(idProduct: string) {
-    this.cartService.deleteProduct(idProduct).subscribe();
+    this.isServerUpdate.set(true);
+    this.cartService.deleteProduct(idProduct).subscribe(() => this.isServerUpdate.set(false));
   }
 }
