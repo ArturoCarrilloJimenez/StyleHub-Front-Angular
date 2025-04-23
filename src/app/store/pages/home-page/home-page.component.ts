@@ -1,11 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { InitialImageHomeComponent } from '../../components/initial-image-home/initial-image-home.component';
 import { ProductsService } from '../../products.service';
+import { InitialImageHomeComponent, ProductCardComponent, InformativeCompositionHomeComponent } from '../../components/';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
-import { ProductCardComponent } from '../../components/product-card/product-card.component';
 import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
 import { RouterLink } from '@angular/router';
-import { InformativeCompositionHomeComponent } from '../../components/informative-composition-home/informative-composition-home.component';
 
 @Component({
   selector: 'app-home-page',

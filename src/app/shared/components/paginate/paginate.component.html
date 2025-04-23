@@ -1,6 +1,6 @@
 <div *ngIf="lastPage != null && lastPage > 0" class="join mx-6">
   <button
-    class="join-item btn btn-primary previous-btn"
+    class="hidden sm:block join-item btn btn-primary previous-btn"
     [disabled]="prevPage == null"
     (click)="sendPage(prevPage)"
   >
@@ -17,7 +17,7 @@
     }
   </button>
   <button
-    class="join-item btn btn-primary next-btn"
+    class="hidden sm:block join-item btn btn-primary next-btn"
     [disabled]="nextPage == null"
     (click)="sendPage(nextPage)"
   >

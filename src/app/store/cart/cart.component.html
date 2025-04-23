@@ -1,23 +1,51 @@
-<div
-  *ngIf="authStatus() == 'authenticated'"
-  tabindex="0"
-  role="button"
-  class="btn btn-ghost btn-circle"
->
-  <div class="indicator">
-    <ng-icon name="heroShoppingCartMini" size="1.5rem"></ng-icon>
-    <span class="badge badge-sm indicator-item">8</span>
+<div *ngIf="authStatus() == 'authenticated' && cart != null" #dropdown>
+  <div
+    (click)="changeShowCart()"
+    tabindex="0"
+    role="button"
+    class="btn btn-ghost btn-circle"
+  >
+    <div class="indicator">
+      <ng-icon name="heroShoppingCartMini" size="1.5rem"></ng-icon>
+      <span class="badge badge-sm indicator-item">{{
+        cart()?.products?.length | number
+      }}</span>
+    </div>
   </div>
-</div>
-<div
-  tabindex="0"
-  class="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
->
-  <div class="card-body">
-    <span class="text-lg font-bold">8 Items</span>
-    <span class="text-info">Subtotal: $999</span>
-    <div class="card-actions">
-      <button class="btn btn-primary btn-block">View cart</button>
+  <div
+    tabindex="0"
+    class="card card-compact absolute bg-base-100 z-1 mt-3 shadow-lg end-0 translate-y-2 w-74 h-100 sm:w-100 md:w-150"
+    [class.hidden]="!showCart()"
+  >
+    <div class="card-body overflow-y-auto relative">
+      <!-- Cuando hay productos mostrara un listado de ellos  -->
+      @if (cart()?.products!.length > 0) {
+      <shop-cart-product
+        *ngFor="let item of cart()?.products; let i = index"
+        [product]="item"
+      ></shop-cart-product>
+      <div class="card-actions">
+        <button class="btn btn-primary btn-block z-1">
+          <ng-icon name="heroTruckSolid" size="1.25rem"></ng-icon>
+          Finalize Purchase
+        </button>
+      </div>
+      } @else {
+        <!-- Cuando no hay productos este indicara que no hay productos -->
+      <p class="text-xl font-bold text-center">
+        Oh, you have no added products
+      </p>
+      <img
+        src="images/not-found-product.png"
+        alt="not found product"
+        class="brightness-50 mask-b-from-60% mask-b-to-95% max-h-67"
+      />
+      <div class="card-actions">
+        <button class="btn btn-primary btn-block z-1" routerLink="/products">
+          View Products
+        </button>
+      </div>
+      }
     </div>
   </div>
 </div>

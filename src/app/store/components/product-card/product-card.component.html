@@ -26,7 +26,6 @@
         {{ product.price | currency : "EUR" : "symbol" }}
       </p>
       <div class="card-actions">
-        <!-- TODO validar que este auth cunado añada producto -->
         <button
           class="btn btn-outline btn-primary rounded-full"
           (click)="addCart(product.id)"
