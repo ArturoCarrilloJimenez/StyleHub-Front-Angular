@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 import { CartResponse } from './interfaces/cart.intreface';
 
 @Injectable({ providedIn: 'root' })
@@ -21,9 +21,9 @@ export class CartService {
       }),
       map((resp) => resp),
       catchError((error: any) => {
-        return of({
+        throw {
           error: 'It was not possible to load cart. Please try again later.',
-        });
+        };
       })
     );
   }
@@ -37,9 +37,9 @@ export class CartService {
         }),
         map((resp) => resp),
         catchError((error: any) => {
-          return of({
+          throw {
             error: 'It was not possible to load cart. Please try again later.',
-          });
+          };
         })
       );
   }
@@ -51,10 +51,10 @@ export class CartService {
       }),
       map((resp) => resp),
       catchError((error: any) => {
-        return of({
+        throw {
           error:
             'It was not possible delete product of cart. Please try again later.',
-        });
+        };
       })
     );
   }
@@ -65,9 +65,9 @@ export class CartService {
         this._cart.set(null);
       }),
       catchError((error: any) => {
-        return of({
+        throw {
           error: 'It was not possible delete cart. Please try again later.',
-        });
+        };
       })
     ).subscribe();
   }

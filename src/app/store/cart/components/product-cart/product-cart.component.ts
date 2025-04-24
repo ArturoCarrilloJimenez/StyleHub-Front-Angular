@@ -13,11 +13,12 @@ import { LimitCharacterTextPipe } from '../../../../shared/pipes/limit-character
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroTrash } from '@ng-icons/heroicons/outline';
 import { CartService } from '../../cart.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'shop-cart-product',
   standalone: true,
-  imports: [CommonModule, LimitCharacterTextPipe, NgIcon],
+  imports: [CommonModule, LimitCharacterTextPipe, NgIcon, RouterLink],
   viewProviders: [provideIcons({ heroTrash })],
   templateUrl: './product-cart.component.html',
   styleUrl: './product-cart.component.scss',

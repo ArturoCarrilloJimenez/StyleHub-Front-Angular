@@ -4,18 +4,18 @@
     <div
       [id]="`${item.alt}${$index}`"
       class="carousel-item object-cover h-full w-full"
-      [class.active]="$index === currentImageIndex()"
+      [class.active]="$index == currentImageIndex()"
     >
       <img [src]="item.url" [alt]="item.alt" />
     </div>
     }
   </div>
-  <div class="absolute bottom-4 flex w-full gap-2 px-2">
+  <div id="carousel-btn" class="absolute bottom-4 flex w-full gap-2 px-2">
     @for (item of images; track $index) {
     <button
-    (click)="changeImage($index)"
-    class="btn btn-soft btn-xs rounded-full btn-circle"
-    [class.opacity-50]="$index === currentImageIndex()"
+      (click)="changeImage($index)"
+      class="btn btn-soft btn-xs rounded-full btn-circle"
+      [class.opacity-50]="$index !== currentImageIndex()"
     ></button>
     }
   </div>

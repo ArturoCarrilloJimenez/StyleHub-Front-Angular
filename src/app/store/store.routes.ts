@@ -26,6 +26,22 @@ export const storeRoutes: Routes = [
             (m) => m.ProductPageComponent
           ),
       },
+      {
+        path: 'products/:idSlug',
+        title: `Product Detail | ${environment.title}`,
+        loadComponent: () =>
+          import(
+            './pages/product-detail-page/product-detail-page.component'
+          ).then((m) => m.ProductDetailPageComponent),
+      },
+      {
+        path: '**',
+        title: `Not Found | ${environment.title}`,
+        loadComponent: () =>
+          import(
+            '../shared/pages/not-found/not-found.component'
+          ).then((m) => m.NotFoundComponent),
+      },
     ],
   },
   {

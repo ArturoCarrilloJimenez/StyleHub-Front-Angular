@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
 import { ProductsService } from '../../products.service';
 import {
@@ -19,23 +19,18 @@ import { PaginateComponent } from '../../../shared/components/paginate/paginate.
   styleUrl: './product-page.component.scss',
 })
 export class ProductPageComponent {
-  products = signal<ProductsResponse | null>(null);
+  products = computed<ProductsResponse | null>(() => this.productsService.products());
   isLoading = signal(true);
 
   constructor(private readonly productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products.set(this.productsService.products());
-
-    if (this.products() == null) this.chargeProduct();
-    else this.isLoading.set(false);
+    this.chargeProduct();
   }
 
   chargeProduct(page: number = 1, limit: number = 12) {
-    this.isLoading.set(true);
-
+    this.isLoading = signal(true);
     this.productsService.getProducts(limit, page).subscribe(() => {
-      this.products.set(this.productsService.products());
       this.isLoading.set(false);
     });
   }

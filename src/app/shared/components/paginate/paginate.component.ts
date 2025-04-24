@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class PaginateComponent implements OnInit {
   pages: number[] = [];
 
-  @Input() lastPage: number | null = null;
+  @Input() pageLength: number | null = null;
   @Input() nextPage: number | null = null;
   @Input() prevPage: number | null = null;
   @Input() currentPage: number = 1;
@@ -20,8 +20,8 @@ export class PaginateComponent implements OnInit {
   private emite = new EventEmitter<number>();
 
   ngOnInit(): void {
-    if (this.lastPage) {
-      for (let i = 0; i < this.lastPage; i++) {
+    if (this.pageLength) {
+      for (let i = 0; i < this.pageLength; i++) {
         this.pages.push(i);
       }
 

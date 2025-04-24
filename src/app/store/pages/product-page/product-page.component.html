@@ -19,7 +19,7 @@
   <div class="mt-6">
     <shared-paginate
       [currentPage]="products()!.currentPage"
-      [lastPage]="products()!.lastPage"
+      [pageLength]="products()!.lastPage"
       [prevPage]="products()!.prevPage"
       [nextPage]="products()!.nextPage"
       (emite)="chargeProduct($event)"

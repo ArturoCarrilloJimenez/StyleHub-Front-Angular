@@ -1,4 +1,11 @@
-import { Component, Input, LOCALE_ID, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  Input,
+  OnChanges,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
 import { Product } from '../../interfaces/product-response.interface';
 import { environment } from '../../../../environments/environments';
 import { LimitCharacterTextPipe } from '../../../shared/pipes/limit-character-text.pipe';
@@ -8,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
 import { CartService } from '../../cart/cart.service';
+import { isNewProduct } from '../../utils/new-product.util';
 
 @Component({
   selector: 'shop-product-card',
@@ -21,12 +29,20 @@ import { CartService } from '../../cart/cart.service';
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent {
   private base = environment.baseUrl;
-  images = signal<ImageProduct[]>([]);
 
   @Input() product!: Product;
   @Input() urlPage = '';
+
+  images = computed<ImageProduct[]>(() =>
+    this.product.images.map((image) => {
+      return {
+        url: `${this.base}files/product/${image}`,
+        alt: this.product.slug,
+      };
+    })
+  );
 
   constructor(
     private readonly router: Router,
@@ -34,25 +50,8 @@ export class ProductCardComponent implements OnInit {
     private readonly cartService: CartService
   ) {}
 
-  ngOnInit(): void {
-    this.images.set(
-      this.product.images.map((image) => {
-        return {
-          url: `${this.base}files/product/${image}`,
-          alt: this.product.slug,
-        };
-      })
-    );
-  }
-
   isNewProduct() {
-    const dateInsert = new Date(this.product.insertDate).getTime();
-    const newDate = new Date().getTime();
-    const deferenceMillisecond = Math.abs(newDate - dateInsert);
-
-    const days = Math.floor(deferenceMillisecond / (1000 * 60 * 60 * 24));
-
-    return days <= 15 ? true : false;
+    return isNewProduct(this.product.insertDate);
   }
 
   addCart(id: string) {
