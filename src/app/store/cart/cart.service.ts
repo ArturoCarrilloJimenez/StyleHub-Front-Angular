@@ -28,9 +28,9 @@ export class CartService {
     );
   }
 
-  setProduct(product: string, quantity?: number) {
+  setProduct(product: string, size?: string, quantity?: number) {
     return this.httpClient
-      .patch<CartResponse>(this.BASE + 'cart', { product, quantity })
+      .patch<CartResponse>(this.BASE + 'cart', { product, quantity, size })
       .pipe(
         tap((resp) => {
           this._cart.set(resp);
