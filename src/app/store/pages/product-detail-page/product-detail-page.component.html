@@ -14,20 +14,51 @@
     <shared-carousel-product [images]="images()"></shared-carousel-product>
     <div class="h-full flex flex-col justify-between py-4 text-center">
       <div>
-        <div class="text-lg font-bold">
+        <div class="text-lg font-bold mb-4">
           {{ product()?.type ?? "" | titlecase }} |
           {{ product()?.gender ?? "" | titlecase }}
         </div>
-        <p class="text-2xl font-bold my-4">
+        <p class="text-2xl font-bold mb-4">
           {{ product()?.price | currency : "EUR" : "symbol" }}
         </p>
+        <div class="join">
+          @for (size of product()?.sizes; track $index) {
+          <button
+            class="btn btn-soft btn-primary btn-circle mx-2"
+            [class.btn-active]="sizeSelect() == size"
+            (click)="sizeSelect.set(size)"
+          >
+            {{ size }}
+          </button>
+          }
+        </div>
       </div>
-      <button
-        class="btn btn-outline btn-primary rounded-full w-full"
-        (click)="addCart(product()?.id ?? '')"
-      >
-        ADD TO CART
-      </button>
+      <div>
+        <div class="flex items-center justify-center py-4">
+          <button
+            type="button"
+            class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
+            (click)="updateQuantity(false)"
+            [disabled]="quantity() <= 1"
+          >
+            -
+          </button>
+          <span class="text-lg px-4 font-bold">{{ quantity() }}</span>
+          <button
+            type="button"
+            class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
+            (click)="updateQuantity()"
+          >
+            +
+          </button>
+        </div>
+        <button
+          class="btn btn-outline btn-primary rounded-full w-full"
+          (click)="addCart(product()?.id ?? '')"
+        >
+          ADD TO CART
+        </button>
+      </div>
     </div>
   </section>
   <section class="my-4">

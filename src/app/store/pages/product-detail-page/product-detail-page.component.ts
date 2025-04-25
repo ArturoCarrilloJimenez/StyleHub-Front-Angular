@@ -25,6 +25,8 @@ export class ProductDetailPageComponent {
   private idSlug = signal(this.route.snapshot.params['idSlug']);
   isLoad = signal(true);
   product = signal<Product | null>(null);
+  quantity = signal(1);
+  sizeSelect = signal('');
 
   images = computed<ImageProduct[]>(() => {
     return this.product() != null
@@ -49,19 +51,7 @@ export class ProductDetailPageComponent {
   ) {
     this.route.params.subscribe((params) => {
       this.idSlug.set(params['idSlug']);
-      this.chargeProduct()
-    });
-  }
-
-  chargeProduct() {
-    this.productService.getOneProduct(this.idSlug()).subscribe({
-      next: (item) => {
-        this.product.set(item);
-        this.isLoad.set(false);
-      },
-      error: () => {
-        this.router.navigateByUrl('/products');
-      },
+      this.chargeProduct();
     });
   }
 
@@ -71,6 +61,32 @@ export class ProductDetailPageComponent {
       return;
     }
 
-    this.cartService.setProduct(id).subscribe();
+    this.cartService
+      .setProduct(id, this.sizeSelect(), this.quantity())
+      .subscribe();
+  }
+
+  chargeProduct() {
+    this.productService.getOneProduct(this.idSlug()).subscribe({
+      next: (item) => {
+        this.product.set(item);
+        this.isLoad.set(false);
+        this.sizeSelect.set(item.sizes[0]);
+
+      },
+      error: () => {
+        this.router.navigateByUrl('/products');
+      },
+    });
+  }
+
+  chargeProductCart() {
+    console.log(this.cartService.getOneProductCart(this.product()?.id ?? ''));
+  }
+
+  updateQuantity(isAddProduct = true) {
+    isAddProduct
+      ? this.quantity.set(this.quantity() + 1)
+      : this.quantity.set(this.quantity() - 1);
   }
 }
