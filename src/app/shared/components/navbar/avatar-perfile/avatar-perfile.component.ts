@@ -26,6 +26,10 @@ export class AvatarPerfileComponent {
     return this.authService.user()?.fullName
   }
 
+  isAdmin() {
+    return !!this.authService.user()?.roles.find((role) => role == 'admin')
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/auth/login');

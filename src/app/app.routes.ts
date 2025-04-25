@@ -15,6 +15,11 @@ export const routes: Routes = [
     canMatch: [IsAuthenticated],
   },
   {
+    path: 'dashboard-admin',
+    loadChildren: () =>
+      import('./admin/admin.routes').then((m) => m.adminRoutes),
+  },
+  {
     path: '',
     loadChildren: () =>
       import('./store/store.routes').then((m) => m.storeRoutes),

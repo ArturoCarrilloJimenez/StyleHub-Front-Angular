@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ProductsService } from '../../products.service';
+import { StoreProductsService } from '../../store.service';
 import { InitialImageHomeComponent, ProductCardComponent, InformativeCompositionHomeComponent } from '../../components/';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
 import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
@@ -22,7 +22,7 @@ export class HomePageComponent implements OnInit {
   products = signal<ProductsResponse | null>(null);
   isLoading = signal(true);
 
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: StoreProductsService) {}
 
   ngOnInit(): void {
     this.products.set(this.productsService.products());

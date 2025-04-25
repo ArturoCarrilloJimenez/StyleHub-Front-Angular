@@ -10,7 +10,7 @@ import { catchError, map, tap } from 'rxjs';
 @Injectable({
   providedIn: 'any',
 })
-export class ProductsService {
+export class StoreProductsService {
   private URL = environment.baseUrl;
 
   private _products = signal<ProductsResponse | null>(null);

@@ -11,7 +11,7 @@
     <!-- TODO cambiar por ruta de detalles producto -->
     <a [routerLink]="`/products/${product.slug}`">
       <h2
-        class="card-title text-xl font-semibold flex items-center justify-between"
+        class="card-title text-xl font-semibold flex items-center justify-between hover:text-primary"
       >
         {{ product.title }}
         <div *ngIf="isNewProduct()" class="badge badge-secondary">NEW</div>
