@@ -5,3 +5,14 @@
 .carousel-item.active {
   display: block;
 }
+
+
+@media (max-width: 576px) {
+  .carousel-item {
+    display: block;
+  }
+
+  #carousel-btn {
+    display: none;
+  }
+}

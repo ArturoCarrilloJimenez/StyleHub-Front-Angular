@@ -1,10 +1,8 @@
 import {
   Component,
   Input,
-  OnChanges,
   OnInit,
   signal,
-  SimpleChanges,
 } from '@angular/core';
 import { ProductCart } from '../../interfaces/cart.intreface';
 import { environment } from '../../../../../environments/environments';
@@ -13,11 +11,13 @@ import { LimitCharacterTextPipe } from '../../../../shared/pipes/limit-character
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroTrash } from '@ng-icons/heroicons/outline';
 import { CartService } from '../../cart.service';
+import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shop-cart-product',
   standalone: true,
-  imports: [CommonModule, LimitCharacterTextPipe, NgIcon],
+  imports: [CommonModule, LimitCharacterTextPipe, NgIcon, RouterLink, FormsModule],
   viewProviders: [provideIcons({ heroTrash })],
   templateUrl: './product-cart.component.html',
   styleUrl: './product-cart.component.scss',
@@ -26,6 +26,7 @@ export class ProductCartComponent implements OnInit {
   private BASE = environment.baseUrl;
   urlImage = '';
   quantity = signal(0);
+  size = signal<string>('');
 
   timeoutId: any = null;
   isServerUpdate = signal(false);
@@ -37,9 +38,10 @@ export class ProductCartComponent implements OnInit {
   ngOnInit(): void {
     this.urlImage = `${this.BASE}files/product/${this.product.product.images[0]}`;
     this.quantity.set(this.product.quantity);
+    this.size.set(this.product.size);
   }
 
-  updateQuantity(idProduct: string, isAddProduct: boolean = true) {
+  updateProductCart(idProduct: string, isAddProduct: boolean = true) {
     this.quantity.set(isAddProduct ? this.quantity() + 1 : this.quantity() - 1);
 
     if (this.timeoutId !== null) clearTimeout(this.timeoutId);
@@ -49,7 +51,7 @@ export class ProductCartComponent implements OnInit {
       else {
         this.isServerUpdate.set(true);
         this.cartService
-          .setProduct(idProduct, this.quantity())
+          .setProduct(idProduct, this.size(), this.quantity())
           .subscribe(() => this.isServerUpdate.set(false));
       }
     }, 750);
@@ -57,6 +59,8 @@ export class ProductCartComponent implements OnInit {
 
   deleteProduct(idProduct: string) {
     this.isServerUpdate.set(true);
-    this.cartService.deleteProduct(idProduct).subscribe(() => this.isServerUpdate.set(false));
+    this.cartService
+      .deleteProduct(idProduct)
+      .subscribe(() => this.isServerUpdate.set(false));
   }
 }

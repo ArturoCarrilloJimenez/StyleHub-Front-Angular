@@ -1,8 +1,8 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
-import { catchError, map, of, tap } from 'rxjs';
-import { CartResponse } from './interfaces/cart.intreface';
+import { catchError, map, tap } from 'rxjs';
+import { CartResponse, ProductCart } from './interfaces/cart.intreface';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -21,54 +21,69 @@ export class CartService {
       }),
       map((resp) => resp),
       catchError((error: any) => {
-        return of({
+        throw {
           error: 'It was not possible to load cart. Please try again later.',
-        });
+        };
       })
     );
   }
 
-  setProduct(product: string, quantity?: number) {
+  getOneProductCart(idProduct: string) {
+    this.getCart();
+
+    return (
+      this._cart()?.products.find(
+        (product: ProductCart) => product.product.id == idProduct
+      ) ?? null
+    );
+  }
+
+  setProduct(product: string, size?: string, quantity?: number) {
     return this.httpClient
-      .patch<CartResponse>(this.BASE + 'cart', { product, quantity })
+      .patch<CartResponse>(this.BASE + 'cart', { product, quantity, size })
       .pipe(
         tap((resp) => {
           this._cart.set(resp);
         }),
         map((resp) => resp),
         catchError((error: any) => {
-          return of({
+          throw {
             error: 'It was not possible to load cart. Please try again later.',
-          });
+          };
         })
       );
   }
 
   deleteProduct(product: string) {
-    return this.httpClient.delete<CartResponse>(`${this.BASE}cart/${product}`).pipe(
-      tap((resp) => {
-        this._cart.set(resp);
-      }),
-      map((resp) => resp),
-      catchError((error: any) => {
-        return of({
-          error:
-            'It was not possible delete product of cart. Please try again later.',
-        });
-      })
-    );
+    return this.httpClient
+      .delete<CartResponse>(`${this.BASE}cart/${product}`)
+      .pipe(
+        tap((resp) => {
+          this._cart.set(resp);
+        }),
+        map((resp) => resp),
+        catchError((error: any) => {
+          throw {
+            error:
+              'It was not possible delete product of cart. Please try again later.',
+          };
+        })
+      );
   }
 
   deleteCart() {
-    this.httpClient.delete(`${this.BASE}cart`).pipe(
-      tap(() => {
-        this._cart.set(null);
-      }),
-      catchError((error: any) => {
-        return of({
-          error: 'It was not possible delete cart. Please try again later.',
-        });
-      })
-    ).subscribe();
+    this.httpClient
+      .delete(`${this.BASE}cart`)
+      .pipe(
+        tap(() => {
+          this._cart.set(null);
+        }),
+        catchError((error: any) => {
+          throw {
+            error: 'It was not possible delete cart. Please try again later.',
+          };
+        })
+      )
+      .subscribe();
   }
 }

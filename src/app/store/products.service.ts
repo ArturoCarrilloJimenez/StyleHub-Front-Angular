@@ -1,8 +1,11 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { ProductsResponse } from './interfaces/product-response.interface';
+import {
+  Product,
+  ProductsResponse,
+} from './interfaces/product-response.interface';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environments';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'any',
@@ -25,11 +28,22 @@ export class ProductsService {
         }),
         map((resp) => resp),
         catchError((error: any) => {
-          return of({
+          throw {
             error:
               'It was not possible to load products. Please try again later.',
-          });
+          };
         })
       );
+  }
+
+  getOneProduct(idSlug: string) {
+    return this.http.get<Product>(this.URL + `products/${idSlug}`).pipe(
+      map((resp) => resp),
+      catchError((error: any) => {
+        throw new Error(
+          'It was not possible to load product. Please try again later.'
+        );
+      })
+    );
   }
 }
