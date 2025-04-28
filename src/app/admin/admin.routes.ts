@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 export const adminRoutes: Routes = [
   {
     path: '',
+    title: 'Admin Dashboard | StyleHub',
     loadComponent: () =>
       import('./layouts/dashboard/dashboard.component').then(
         (m) => m.DashboardAdminComponent
@@ -11,8 +12,8 @@ export const adminRoutes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./pages/home-dashboard-admin-page/home-dashboard-admin-page.component').then(
-            (m) => m.HomeDashboardAdminPageComponent
+          import('./pages/product-edit-page/product-edit-page.component').then(
+            (m) => m.ProductEditPageComponent
           ),
       },
     ],

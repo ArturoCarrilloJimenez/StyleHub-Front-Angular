@@ -32,7 +32,7 @@ export class NavbarAdminComponent {
     {
       title: 'Dashboard',
       icon: 'heroRectangleGroupSolid',
-      route: '/products',
+      route: '/dashboard-admin',
     },
   ];
 }

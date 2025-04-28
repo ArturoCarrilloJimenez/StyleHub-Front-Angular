@@ -20,8 +20,9 @@
             class="drawer-overlay"
           ></label>
           <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            <div>
-              <h1 class="text-lg font-bold text-center">{{ title }}</h1>
+            <div class="text-center">
+              <h2 class="text-lg font-bold text-center">{{ title }}</h2>
+              <p class="text-gray-300">This is the admin dashboard</p>
             </div>
             <hr class="text-base-300 my-3" />
             @for (item of sidebarItems; track $index) {
