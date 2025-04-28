@@ -3,16 +3,18 @@
   <p>Charge product</p>
 </div>
 
-<div *ngIf="!isLoad() && product() != null" class="p-4">
-  <h1
-    class="card-title text-4xl font-semibold flex items-center justify-between pb-4"
-  >
+<div *ngIf="!isLoad() && product() != null" class="p-4 max-w-7xl mx-auto">
+  <h1 class="card-title text-4xl font-semibold flex items-center justify-between pb-6">
     {{ product()?.title }}
     <div *ngIf="isNewProduct()" class="badge badge-secondary">NEW</div>
   </h1>
-  <section class="grid gap-4 sm:grid-flow-col sm:grid-cols-2">
-    <shared-carousel-product [images]="images()"></shared-carousel-product>
-    <div class="h-full flex flex-col justify-between py-4 text-center">
+
+  <section class="grid gap-8 md:grid-cols-2 items-start">
+    <div class="w-full max-w-md mx-auto">
+      <shared-carousel-product [images]="images()"></shared-carousel-product>
+    </div>
+
+    <div class="flex flex-col justify-between h-full py-4 text-center">
       <div>
         <div class="text-lg font-bold mb-4">
           {{ product()?.type ?? "" | titlecase }} |
@@ -21,6 +23,7 @@
         <p class="text-2xl font-bold mb-4">
           {{ product()?.price | currency : "EUR" : "symbol" }}
         </p>
+
         <div class="join">
           @for (size of product()?.sizes; track $index) {
           <button
@@ -33,6 +36,7 @@
           }
         </div>
       </div>
+
       <div>
         <div class="flex items-center justify-center py-4">
           <button
@@ -52,6 +56,7 @@
             +
           </button>
         </div>
+
         <button
           class="btn btn-outline btn-primary rounded-full w-full"
           (click)="addCart(product()?.id ?? '')"
@@ -61,8 +66,9 @@
       </div>
     </div>
   </section>
-  <section class="my-4">
+
+  <section class="my-8">
     <h2 class="font-semibold text-lg">Description</h2>
-    <p class="text-gray-400 text-base mb-4">{{ product()?.description }}</p>
+    <p class="text-gray-500 text-base">{{ product()?.description }}</p>
   </section>
 </div>

@@ -11,8 +11,8 @@ export const adminRoutes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./layouts/dashboard/dashboard.component').then(
-            (m) => m.DashboardAdminComponent
+          import('./pages/home-dashboard-admin-page/home-dashboard-admin-page.component').then(
+            (m) => m.HomeDashboardAdminPageComponent
           ),
       },
     ],
