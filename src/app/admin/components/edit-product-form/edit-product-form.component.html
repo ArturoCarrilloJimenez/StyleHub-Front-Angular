@@ -1,0 +1,61 @@
+<form
+  class="space-y-4 w-full text-start"
+  [formGroup]="productForm"
+  (ngSubmit)="onSubmit()"
+>
+  <h3 class="font-bold text-lg">General Data</h3>
+  <!-- Title Input -->
+  <div>
+    <label class="input w-full">
+      <input
+        width="100px"
+        type="text"
+        placeholder="title"
+        formControlName="title"
+      />
+    </label>
+    @if (formUtils.isValidField(productForm, 'title')) {
+    <div class="text-xs text-error mt-2">
+      {{ formUtils.getFielError(productForm, "title") }}
+    </div>
+    }
+  </div>
+
+    <!-- slug Input -->
+  <div>
+    <label class="input w-full">
+      <input
+        width="100px"
+        type="text"
+        placeholder="slug"
+        formControlName="slug"
+      />
+    </label>
+    @if (formUtils.isValidField(productForm, 'title')) {
+    <div class="text-xs text-error mt-2">
+      {{ formUtils.getFielError(productForm, "title") }}
+    </div>
+    }
+  </div>
+
+  <!-- Descripción Input -->
+  <div>
+    <label class="input w-full">
+      <input
+        width="100px"
+        type="text"
+        placeholder="description"
+        formControlName="description"
+      />
+    </label>
+    @if (formUtils.isValidField(productForm, 'description')) {
+    <div class="text-xs text-error mt-2">
+      {{ formUtils.getFielError(productForm, "description") }}
+    </div>
+    }
+  </div>
+
+  <button type="submit" [disabled]="" class="btn btn-soft w-full">
+    Save Product
+  </button>
+</form>

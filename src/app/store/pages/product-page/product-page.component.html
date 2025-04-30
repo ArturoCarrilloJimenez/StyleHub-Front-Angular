@@ -18,10 +18,12 @@
   </div>
   <div class="mt-6">
     <shared-paginate
-      [currentPage]="products()!.currentPage"
-      [pageLength]="products()!.lastPage"
-      [prevPage]="products()!.prevPage"
-      [nextPage]="products()!.nextPage"
+      [paginate]="{
+        currentPage: products()!.currentPage,
+        pageLength: products()!.lastPage,
+        prevPage: products()!.prevPage,
+        nextPage: products()!.nextPage
+      }"
       (emite)="chargeProduct($event)"
     ></shared-paginate>
   </div>
