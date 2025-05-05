@@ -21,7 +21,7 @@
       </div>
 
       <!-- Slug -->
-      <div>
+      <div *ngIf="!!productEdit">
         <label class="block text-sm font-medium mb-1">Slug</label>
         <input
           type="text"
@@ -194,7 +194,7 @@
 <div
   *ngIf="error()"
   role="alert"
-  class="fixed top-18 right-0 left-0 alert alert-error"
+  class="fixed top-18 right-0 left-0 alert alert-error font-semibold"
 >
   <span>{{ error() }}</span>
 </div>

@@ -1,10 +1,12 @@
 import {
   Component,
   computed,
+  EventEmitter,
   inject,
   Input,
   OnChanges,
   OnInit,
+  Output,
   signal,
   SimpleChanges,
 } from '@angular/core';
@@ -23,7 +25,6 @@ import { CommonModule } from '@angular/common';
 import { CarouselProductComponent } from '../../../store/components/carousel-product/carousel-product.component';
 import { ImageProduct } from '../../../store/interfaces/images-products.interface';
 import { environment } from '../../../../environments/environments';
-import { delay } from 'rxjs';
 import {
   CreateProduct,
   FileUrl,
@@ -47,6 +48,7 @@ export class EditProductFormComponent implements OnChanges, OnInit {
   private base = environment.baseUrl;
 
   @Input() productEdit: Product | null = null;
+  @Output() editProductEmitter = new EventEmitter<boolean>();
 
   productEditImages = computed<ImageProduct[]>(() => {
     return this.productEdit != null
@@ -143,28 +145,39 @@ export class EditProductFormComponent implements OnChanges, OnInit {
     this.productImages.set(productImages);
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (this.productForm.valid) {
-      const productValue: CreateProduct = this.productForm.value;
+      const productValueForm: CreateProduct = this.productForm.value;
+      const { slug, ...productValue } = productValueForm;
+
       if (productValue.sizes.length <= 0)
         this.error.set('Select one or more sizes');
 
-      if (this.error()) {
+      if (!this.error()) {
+        const observableProduct =
+          this.productEdit !== null
+            ? await this.productEditService.editProduct(
+                this.productEdit.id,
+                { ...productValue, slug, images: this.productEdit.images },
+                this.productImages()
+              )
+            : await this.productEditService.createProduct(
+                productValue,
+                this.productImages()
+              );
+
+        observableProduct.subscribe({
+          next: () => {
+            this.editProductEmitter.emit(false);
+          },
+          error: (error) => {
+            this.error.set(error.message);
+          },
+        });
+
         setTimeout(() => {
           this.error.set(null);
-        }, 5000);
-      } else {
-        if (this.productEdit !== null) {
-          this.productEditService.createProduct(
-            productValue,
-            this.productImages()
-          );
-        } else {
-          this.productEditService.createProduct(
-            productValue,
-            this.productImages()
-          );
-        }
+        }, 10000);
       }
     }
   }

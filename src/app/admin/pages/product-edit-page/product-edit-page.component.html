@@ -37,7 +37,7 @@
 
   <ng-template #formProduct>
     <div class="text-center">
-      <admin-edit-product-form [productEdit]="product()"></admin-edit-product-form>
+      <admin-edit-product-form [productEdit]="product()" (editProductEmitter)="isViewEditForm.set($event); chargeProduct()"></admin-edit-product-form>
     </div>
   </ng-template>
 </div>
