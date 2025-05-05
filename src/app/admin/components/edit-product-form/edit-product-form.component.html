@@ -1,61 +1,200 @@
-<form
-  class="space-y-4 w-full text-start"
-  [formGroup]="productForm"
-  (ngSubmit)="onSubmit()"
->
-  <h3 class="font-bold text-lg">General Data</h3>
-  <!-- Title Input -->
-  <div>
-    <label class="input w-full">
-      <input
-        width="100px"
-        type="text"
-        placeholder="title"
-        formControlName="title"
-      />
-    </label>
-    @if (formUtils.isValidField(productForm, 'title')) {
-    <div class="text-xs text-error mt-2">
-      {{ formUtils.getFielError(productForm, "title") }}
+<form class="space-y-6 w-full text-start" [formGroup]="productForm">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Datos Generales -->
+    <div class="space-y-6">
+      <h3 class="text-xl font-semibold border-b pb-2">General Data</h3>
+
+      <!-- Title -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Title</label>
+        <input
+          type="text"
+          placeholder="Title"
+          formControlName="title"
+          class="input input-bordered w-full"
+        />
+        @if (formUtils.isValidField(productForm, 'title')) {
+        <div class="text-xs text-error mt-1">
+          {{ formUtils.getFielError(productForm, "title") }}
+        </div>
+        }
+      </div>
+
+      <!-- Slug -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Slug</label>
+        <input
+          type="text"
+          placeholder="Slug"
+          formControlName="slug"
+          class="input input-bordered w-full"
+        />
+        @if (formUtils.isValidField(productForm, 'slug')) {
+        <div class="text-xs text-error mt-1">
+          {{ formUtils.getFielError(productForm, "slug") }}
+        </div>
+        }
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Description</label>
+        <textarea
+          formControlName="description"
+          placeholder="Description"
+          class="textarea textarea-bordered w-full min-h-[120px]"
+        ></textarea>
+        @if (formUtils.isValidField(productForm, 'description')) {
+        <div class="text-xs text-error mt-1">
+          {{ formUtils.getFielError(productForm, "description") }}
+        </div>
+        }
+      </div>
+
+      <!-- Detalle del Producto -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-semibold border-b pb-2">Detail Product</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Price -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Price</label>
+            <input
+              type="number"
+              placeholder="Price"
+              formControlName="price"
+              class="input input-bordered w-full"
+            />
+            @if (formUtils.isValidField(productForm, 'price')) {
+            <div class="text-xs text-error mt-1">
+              {{ formUtils.getFielError(productForm, "price") }}
+            </div>
+            }
+          </div>
+
+          <!-- Stock -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Stock</label>
+            <input
+              type="number"
+              placeholder="Stock"
+              formControlName="stock"
+              class="input input-bordered w-full"
+            />
+            @if (formUtils.isValidField(productForm, 'stock')) {
+            <div class="text-xs text-error mt-1">
+              {{ formUtils.getFielError(productForm, "stock") }}
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Categoría -->
+        <div>
+          <label class="block text-sm font-medium mb-1">Category</label>
+          <select class="select select-bordered w-full" formControlName="type">
+            <option disabled [selected]="!!productEdit" value="">
+              Select Category
+            </option>
+            @for (item of typeProduct(); track $index) {
+            <option
+              [selected]="item.name == productEdit?.type"
+              [value]="item.id"
+            >
+              {{ item.name }}
+            </option>
+            }
+          </select>
+          @if (formUtils.isValidField(productForm, 'type')) {
+          <div class="text-xs text-error mt-1">
+            {{ formUtils.getFielError(productForm, "type") }}
+          </div>
+          }
+        </div>
+
+        <!-- Género -->
+        <div>
+          <label class="block text-sm font-medium mb-1">Gender</label>
+          <select
+            class="select select-bordered w-full"
+            formControlName="gender"
+          >
+            <option disabled [selected]="!!productEdit" value="">
+              Select Gender
+            </option>
+            @for (item of gender; track $index) {
+            <option [selected]="item == productEdit?.gender" [value]="item">
+              {{ item }}
+            </option>
+            }
+          </select>
+          @if (formUtils.isValidField(productForm, 'gender')) {
+          <div class="text-xs text-error mt-1">
+            {{ formUtils.getFielError(productForm, "gender") }}
+          </div>
+          }
+        </div>
+
+        <!-- Tallas -->
+        <div>
+          <label class="block text-sm font-medium mb-2">Sizes</label>
+          <div class="flex flex-wrap gap-2">
+            @for (item of sizes; track $index) {
+            <button
+              type="button"
+              (click)="updateSize(item)"
+              [class.btn-active]="findSize(item)"
+              class="btn btn-outline btn-primary rounded-full"
+            >
+              {{ item }}
+            </button>
+            }
+          </div>
+        </div>
+      </div>
     </div>
-    }
+
+    <!-- Imágenes -->
+    <div class="space-y-6">
+      <h3 class="text-xl font-semibold border-b pb-2">Product Images</h3>
+      <div class="max-w-md mx-auto">
+        <shared-carousel-product
+          [images]="productEditImages()"
+        ></shared-carousel-product>
+      </div>
+      <input
+        type="file"
+        multiple
+        accept="images/*"
+        class="file-input file-input-bordered w-full"
+        (change)="onChangeImage($event)"
+        formControlName="images"
+      />
+
+      <div class="grid grid-cols-3 gap-2 mt-4">
+        <img
+          *ngFor="let newImage of productImages()"
+          [src]="newImage.url"
+          [alt]="newImage.file.name"
+          class="w-full h-24 object-cover rounded-lg shadow"
+        />
+      </div>
+    </div>
   </div>
 
-    <!-- slug Input -->
-  <div>
-    <label class="input w-full">
-      <input
-        width="100px"
-        type="text"
-        placeholder="slug"
-        formControlName="slug"
-      />
-    </label>
-    @if (formUtils.isValidField(productForm, 'title')) {
-    <div class="text-xs text-error mt-2">
-      {{ formUtils.getFielError(productForm, "title") }}
-    </div>
-    }
-  </div>
-
-  <!-- Descripción Input -->
-  <div>
-    <label class="input w-full">
-      <input
-        width="100px"
-        type="text"
-        placeholder="description"
-        formControlName="description"
-      />
-    </label>
-    @if (formUtils.isValidField(productForm, 'description')) {
-    <div class="text-xs text-error mt-2">
-      {{ formUtils.getFielError(productForm, "description") }}
-    </div>
-    }
-  </div>
-
-  <button type="submit" [disabled]="" class="btn btn-soft w-full">
+  <button
+    type="submit"
+    (click)="onSubmit()"
+    [disabled]="!productForm.valid"
+    class="btn btn-primary w-full mt-6"
+  >
     Save Product
   </button>
 </form>
+
+<div
+  *ngIf="error()"
+  role="alert"
+  class="fixed top-18 right-0 left-0 alert alert-error"
+>
+  <span>{{ error() }}</span>
+</div>

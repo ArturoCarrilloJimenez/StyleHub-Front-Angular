@@ -26,6 +26,8 @@ export class ProductAdminComponent {
 
   @Input() product!: Product;
   @Output() editProductEmitter = new EventEmitter<string>();
+  @Output() deleteProductEmitter = new EventEmitter<string>();
+
 
   images = computed<string[]>(() =>
     this.product.images.map((image) => {
@@ -34,7 +36,7 @@ export class ProductAdminComponent {
   );
 
   deleteProduct(id: string) {
-    throw new Error('Method not implemented.');
+    this.deleteProductEmitter.emit(id);
   }
 
   editProduct(id: string) {

@@ -8,11 +8,7 @@ import {
   ProductsResponse,
 } from '../../../store/interfaces/product-response.interface';
 import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
-import {
-
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroArchiveBoxSolid } from '@ng-icons/heroicons/solid';
 import { EditProductFormComponent } from '../../components/edit-product-form/edit-product-form.component';
@@ -27,7 +23,6 @@ import { EditProductFormComponent } from '../../components/edit-product-form/edi
     LoadingCardComponent,
     FormsModule,
     ReactiveFormsModule,
-    NgIcon,
     EditProductFormComponent,
   ],
   viewProviders: [provideIcons({ heroArchiveBoxSolid })],
@@ -63,6 +58,12 @@ export class ProductEditPageComponent {
     this.productEditService.getOneProduct(idProduct).subscribe((product) => {
       this.product.set(product);
       this.isViewEditForm.set(true);
+    });
+  }
+
+  deleteProduct(id: string) {
+    this.productEditService.deleteProduct(id).subscribe(() => {
+      this.chargeProduct();
     });
   }
 

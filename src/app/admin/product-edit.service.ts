@@ -6,6 +6,8 @@ import {
   ProductsResponse,
 } from '../store/interfaces/product-response.interface';
 import { catchError, map, tap } from 'rxjs';
+import { TypeProductResponse } from './interfaces/product-type.interface';
+import { CreateProduct, FileUrl } from './interfaces/create-product.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ProductEditService {
@@ -52,12 +54,38 @@ export class ProductEditService {
     );
   }
 
+  getAllCategory() {
+    return this.http.get<TypeProductResponse[]>(this.URL + `products/type`).pipe(
+      map((resp) => resp),
+      catchError((error: any) => {
+        throw new Error(
+          'It was not possible to load product. Please try again later.'
+        );
+      })
+    );
+  }
+
+  createProduct(newProduct: CreateProduct, images: FileUrl[]) {
+    console.log(newProduct);
+  }
+
   deleteProduct(idSlug: string) {
     return this.http.delete(this.URL + `products/${idSlug}`).pipe(
       map((resp) => true),
       catchError((error: any) => {
         throw new Error(
           'It was not possible to load product. Please try again later.'
+        );
+      })
+    );
+  }
+
+  private chargeProductFile(file: File) {
+    return this.http.post(this.URL + `files/product`, file).pipe(
+      map((resp) => resp),
+      catchError((error: any) => {
+        throw new Error(
+          'It was not possible charge image. Please try again later.'
         );
       })
     );

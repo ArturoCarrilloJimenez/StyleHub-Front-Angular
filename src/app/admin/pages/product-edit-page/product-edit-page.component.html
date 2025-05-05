@@ -19,7 +19,7 @@
     <div>
       @for (item of products()?.data; track $index) {
       <div class="my-2">
-        <admin-product-card [product]="item" (editProductEmitter)="editProduct($event)"></admin-product-card>
+        <admin-product-card [product]="item" (editProductEmitter)="editProduct($event)" (deleteProductEmitter)="deleteProduct($event)"></admin-product-card>
       </div>
       }
     </div>

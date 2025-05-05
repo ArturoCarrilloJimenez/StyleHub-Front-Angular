@@ -34,11 +34,11 @@
         </p>
       </div>
       <div
-        class="badge badge-lg text-white font-extrabold"
+        class="font-semibold"
         [ngClass]="{
-          'badge-error': product.stock < 15,
-          'badge-success': product.stock > 30,
-          'badge-warning': product.stock >= 15 && product.stock <= 30
+          'text-error': product.stock < 15,
+          'text-success': product.stock > 30,
+          'text-warning': product.stock >= 15 && product.stock <= 30
         }"
       >
         {{ product.stock }}
