@@ -61,8 +61,19 @@ export class ProductEditPageComponent {
     });
   }
 
+  viewActiveProduct() {
+    this.isActiveProduct.set(!this.isActiveProduct());
+    this.chargeProduct();
+  }
+
   deleteProduct(id: string) {
     this.productEditService.deleteProduct(id).subscribe(() => {
+      this.chargeProduct();
+    });
+  }
+
+  activeProduct(id: string) {
+    this.productEditService.activeProduct(id).subscribe(() => {
       this.chargeProduct();
     });
   }

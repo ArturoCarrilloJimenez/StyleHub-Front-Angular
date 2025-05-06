@@ -1,16 +1,18 @@
 <div class="p-4">
   <div class="flex justify-between">
     <h2 class="text-center font-extrabold text-3xl mb-4">Edit Product</h2>
-    <button
-      class="btn btn-primary mr-4"
-      (click)="newProduct()"
-    >
-      {{ isViewEditForm() ? "View Product" : "New Product" }}
-    </button>
+    <div>
+      <button class="btn btn-primary mr-2" (click)="viewActiveProduct()">
+        {{ isActiveProduct() ? "All Product" : "Active Product" }}
+      </button>
+      <button class="btn btn-primary mr-4" (click)="newProduct()">
+        {{ isViewEditForm() ? "View Product" : "New Product" }}
+      </button>
+    </div>
   </div>
   <section *ngIf="!isViewEditForm(); else formProduct" class="mt-4 text-center">
     <h3 class="text-center font-semibold mb-2">
-      Total Product <span class="text-secondary">{{ products()?.count }}</span>
+      Total Product <span class="text-secondary">{{ products()?.count }}</span> {{ isActiveProduct() ? 'Actives' : ''}}
     </h3>
     @if (isLoading()) {
     <shared-loading></shared-loading>
@@ -19,7 +21,12 @@
     <div>
       @for (item of products()?.data; track $index) {
       <div class="my-2">
-        <admin-product-card [product]="item" (editProductEmitter)="editProduct($event)" (deleteProductEmitter)="deleteProduct($event)"></admin-product-card>
+        <admin-product-card
+          [product]="item"
+          (editProductEmitter)="editProduct($event)"
+          (deleteProductEmitter)="deleteProduct($event)"
+          (activeProductEmitter)="activeProduct($event)"
+        ></admin-product-card>
       </div>
       }
     </div>
@@ -37,7 +44,10 @@
 
   <ng-template #formProduct>
     <div class="text-center">
-      <admin-edit-product-form [productEdit]="product()" (editProductEmitter)="isViewEditForm.set($event); chargeProduct()"></admin-edit-product-form>
+      <admin-edit-product-form
+        [productEdit]="product()"
+        (editProductEmitter)="isViewEditForm.set($event); chargeProduct()"
+      ></admin-edit-product-form>
     </div>
   </ng-template>
 </div>
