@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+interface Paginate {
+  pageLength: number;
+  nextPage: number | null;
+  prevPage: number | null;
+  currentPage: number;
+}
+
 @Component({
   selector: 'shared-paginate',
   standalone: true,
@@ -11,26 +18,22 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class PaginateComponent implements OnInit {
   pages: number[] = [];
 
-  @Input() pageLength: number | null = null;
-  @Input() nextPage: number | null = null;
-  @Input() prevPage: number | null = null;
-  @Input() currentPage: number = 1;
+  @Input() paginate!: Paginate;
 
   @Output()
   private emite = new EventEmitter<number>();
 
   ngOnInit(): void {
-    if (this.pageLength) {
-      for (let i = 0; i < this.pageLength; i++) {
+    if (this.paginate.pageLength) {
+      for (let i = 0; i < this.paginate.pageLength; i++) {
         this.pages.push(i);
       }
 
       if (this.pages.length > 5) {
-        this.pages.splice(this.currentPage + 2, this.pages.length, -1)
+        this.pages.splice(this.paginate.currentPage + 2, this.pages.length, -1);
 
-        if (this.currentPage > 3) {
-        this.pages.splice(0, this.currentPage - 3, -1);
-
+        if (this.paginate.currentPage > 3) {
+          this.pages.splice(0, this.paginate.currentPage - 3, -1);
         }
       }
     }

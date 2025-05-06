@@ -1,0 +1,48 @@
+<article
+  class="flex text-start items-center gap-4 p-4 rounded-lg shadow-sm bg-base-100"
+>
+  <img
+    class="w-24 h-24 object-cover rounded-lg"
+    [src]="images()[0]"
+    [alt]="product.title"
+  />
+
+  <div class="flex-1">
+    <div class="flex items-start justify-between mb-2">
+      <h3 class="text-lg font-bold line-clamp-1">{{ product.title }}</h3>
+      <div class="flex">
+        <button
+          class="btn btn-sm btn-soft btn-circle btn-primary mr-2"
+          (click)="editProduct(product.id)"
+        >
+          <ng-icon name="heroPencilSquare" size="1.25rem"></ng-icon>
+        </button>
+        <button
+          class="btn btn-sm btn-soft btn-circle btn-error"
+          (click)="deleteProduct(product.id)"
+        >
+          <ng-icon name="heroTrash" size="1.25rem"></ng-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex items-end justify-between">
+      <div class="space-y-1 text-start">
+        <p class="text-sm text-gray-500">{{ product.sizes }}</p>
+        <p class="text-base font-semibold">
+          {{ product.price | currency : "EUR" : "symbol" }}
+        </p>
+      </div>
+      <div
+        class="font-semibold"
+        [ngClass]="{
+          'text-error': product.stock < 15,
+          'text-success': product.stock > 30,
+          'text-warning': product.stock >= 15 && product.stock <= 30
+        }"
+      >
+        {{ product.stock }}
+      </div>
+    </div>
+  </div>
+</article>

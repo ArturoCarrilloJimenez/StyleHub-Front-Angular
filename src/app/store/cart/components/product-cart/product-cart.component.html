@@ -1,12 +1,12 @@
 <div class="flex gap-4 px-4 py-6 rounded-md shadow">
-  <div class="flex gap-6 sm:gap-4 max-sm:flex-col w-full">
+  <div class="flex gap-6 items-center sm:gap-4 max-sm:flex-col w-full">
     <div class="w-24 h-24 max-sm:w-24 max-sm:h-24 shrink-0">
       <img [src]="urlImage" [alt]="product.product.title" class="rounded-md" />
     </div>
     <div class="flex flex-col gap-4 w-full">
       <div class="flex justify-between items-center">
         <a
-          class="text-base font-semibold md:text-lg"
+          class="text-base font-semibold md:text-lg hover:text-primary"
           [routerLink]="`/products/${product.product.slug}`"
         >
           {{ product.product.title | limitCharacterText : 20 }}
@@ -14,6 +14,7 @@
         <button
           class="btn btn-sm btn-circle btn-soft btn-error"
           (click)="deleteProduct(product.product.id)"
+          [disabled]="isServerUpdate()"
         >
           <ng-icon name="heroTrash" size="1.5rem"></ng-icon>
         </button>
@@ -22,6 +23,7 @@
         class="select rounded-full w-20 bg-base-300"
         [(ngModel)]="size"
         (change)="updateProductCart(product.product.id)"
+        [disabled]="isServerUpdate()"
       >
         @for (item of product.product.sizes; track $index) {
         <option [selected]="size() == item">{{ item }}</option>

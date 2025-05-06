@@ -23,6 +23,13 @@
         <span class="badge">New</span>
       </a>
     </div>
+    <a
+    *ngIf="isAdmin()"
+      class="justify-between"
+      routerLink="/dashboard-admin"
+      routerLinkActive="menu-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >Dashboard</a>
     <div (click)="logout()"><button>Logout</button></div>
   </li>
 </ul>

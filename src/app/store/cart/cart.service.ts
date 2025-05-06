@@ -9,10 +9,12 @@ export class CartService {
   private BASE = environment.baseUrl;
 
   private _cart = signal<CartResponse | null>(null);
+  private _cartProduct = signal<ProductCart | null>(null);
 
   constructor(private httpClient: HttpClient) {}
 
   cart = computed<CartResponse | null>(() => this._cart());
+  cartProduct = computed<ProductCart | null>(() => this._cartProduct());
 
   getCart() {
     return this.httpClient.get<CartResponse>(this.BASE + 'cart').pipe(
@@ -29,13 +31,20 @@ export class CartService {
   }
 
   getOneProductCart(idProduct: string) {
-    this.getCart();
-
-    return (
-      this._cart()?.products.find(
-        (product: ProductCart) => product.product.id == idProduct
-      ) ?? null
-    );
+    return this.getCart()
+      .pipe(
+        map((cart) => {
+          return cart.products.reduce<ProductCart | null>(
+            (productCart, current) => {
+              return current.product.id === idProduct ? current : productCart;
+            },
+            null
+          );
+        })
+      )
+      .subscribe((productCart) => {
+        this._cartProduct.set(productCart);
+      });
   }
 
   setProduct(product: string, size?: string, quantity?: number) {

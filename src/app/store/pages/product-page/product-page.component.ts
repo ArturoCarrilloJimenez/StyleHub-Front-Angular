@@ -1,6 +1,6 @@
 import { Component, computed, signal } from '@angular/core';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
-import { ProductsService } from '../../products.service';
+import { StoreProductsService } from '../../store.service';
 import {
   ProductCardComponent,
   InitImageProductsComponent,
@@ -22,7 +22,7 @@ export class ProductPageComponent {
   products = computed<ProductsResponse | null>(() => this.productsService.products());
   isLoading = signal(true);
 
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: StoreProductsService) {}
 
   ngOnInit(): void {
     this.chargeProduct();
