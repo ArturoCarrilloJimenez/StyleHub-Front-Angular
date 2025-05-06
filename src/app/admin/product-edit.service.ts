@@ -73,9 +73,11 @@ export class ProductEditService {
 
     const product: CreateProduct = { images: imagesName, ...newProduct };
 
-    return this.http.patch(this.URL + `products/`, product).pipe(
+    return this.http.post(this.URL + `products/`, product).pipe(
       map((resp) => resp),
       catchError((error: any) => {
+        console.log(error);
+
         throw new Error(
           'It was not possible create product. Please try again later.'
         );

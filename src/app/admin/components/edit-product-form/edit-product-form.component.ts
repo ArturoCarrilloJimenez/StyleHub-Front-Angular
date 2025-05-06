@@ -75,7 +75,7 @@ export class EditProductFormComponent implements OnChanges, OnInit {
     price: [0, [Validators.required, Validators.min(0)]],
     stock: [0, [Validators.required, Validators.min(0)]],
 
-    sizes: [['']],
+    sizes: [[]],
     type: ['', Validators.required],
     gender: ['', [Validators.required]],
   });
