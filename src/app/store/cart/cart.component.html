@@ -25,13 +25,13 @@
         [product]="item"
       ></shop-cart-product>
       <div class="card-actions">
-        <button class="btn btn-primary btn-block z-1">
+        <button class="btn btn-primary btn-block z-1" (click)="orderProduct()">
           <ng-icon name="heroTruckSolid" size="1.25rem"></ng-icon>
           Finalize Purchase
         </button>
       </div>
       } @else {
-        <!-- Cuando no hay productos este indicara que no hay productos -->
+      <!-- Cuando no hay productos este indicara que no hay productos -->
       <p class="text-xl font-bold text-center">
         Oh, you have no added products
       </p>

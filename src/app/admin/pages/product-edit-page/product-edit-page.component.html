@@ -1,8 +1,8 @@
 <div class="p-4">
-  <div class="flex justify-between">
+  <div class="flex justify-center flex-col sm:flex-row sm:justify-between ">
     <h2 class="text-center font-extrabold text-3xl mb-4">Edit Product</h2>
-    <div>
-      <button class="btn btn-primary mr-2" (click)="viewActiveProduct()">
+    <div class="flex justify-center">
+      <button class="btn btn-outline mr-2" *ngIf="!isViewEditForm()" (click)="viewActiveProduct()">
         {{ isActiveProduct() ? "All Product" : "Active Product" }}
       </button>
       <button class="btn btn-primary mr-4" (click)="newProduct()">

@@ -1,4 +1,12 @@
-import { Component, computed, ElementRef, HostListener, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { CommonModule } from '@angular/common';
@@ -31,6 +39,14 @@ export class CartComponent implements OnInit {
     this.cartService.getCart().subscribe();
   }
 
+  totalPrice = computed(
+    () =>
+      this.cart()?.products.reduce(
+        (acc, product) => acc + product.quantity * product.product.price,
+        0
+      ) || 0
+  );
+
   authStatus() {
     return this.authService.authStatus();
   }
@@ -49,5 +65,9 @@ export class CartComponent implements OnInit {
     ) {
       this.showCart.set(false);
     }
+  }
+
+  orderProduct() {
+    this.cartService.generateOrder();
   }
 }

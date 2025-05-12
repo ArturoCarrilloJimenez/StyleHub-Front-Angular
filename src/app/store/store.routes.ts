@@ -35,12 +35,21 @@ export const storeRoutes: Routes = [
           ).then((m) => m.ProductDetailPageComponent),
       },
       {
+        path: 'order-success',
+        title: `Order Success | ${environment.title}`,
+        loadComponent: () =>
+          import('../shared/pages/order-succes/order-succes.component').then(
+            (m) => m.OrderSuccessComponent
+          ),
+        canMatch: [IsAuthenticated],
+      },
+      {
         path: '**',
         title: `Not Found | ${environment.title}`,
         loadComponent: () =>
-          import(
-            '../shared/pages/not-found/not-found.component'
-          ).then((m) => m.NotFoundComponent),
+          import('../shared/pages/not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
+          ),
       },
     ],
   },
