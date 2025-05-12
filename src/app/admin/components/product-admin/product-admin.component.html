@@ -9,7 +9,7 @@
 
   <div class="flex-1">
     <div class="flex items-start justify-between mb-2">
-      <h3 class="text-lg font-bold line-clamp-1">{{ product.title }}</h3>
+      <h3 class="text-lg font-bold line-clamp-1">{{ product.title }} <div *ngIf="!product.isActive"  class="badge badge-soft badge-warning">Inactive</div></h3>
       <div class="flex">
         <button
           class="btn btn-sm btn-soft btn-circle btn-primary mr-2"
@@ -17,11 +17,17 @@
         >
           <ng-icon name="heroPencilSquare" size="1.25rem"></ng-icon>
         </button>
-        <button
+        <button *ngIf="product.isActive"
           class="btn btn-sm btn-soft btn-circle btn-error"
           (click)="deleteProduct(product.id)"
         >
           <ng-icon name="heroTrash" size="1.25rem"></ng-icon>
+        </button>
+        <button *ngIf="!product.isActive"
+          class="btn btn-sm btn-soft btn-circle btn-success"
+          (click)="activeProduct(product.id)"
+        >
+          <ng-icon name="aspectsActive" size="1.25rem"></ng-icon>
         </button>
       </div>
     </div>

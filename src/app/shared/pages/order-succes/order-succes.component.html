@@ -1,0 +1,35 @@
+<div
+  class="relative flex flex-col items-center justify-center h-screen  text-base-content overflow-hidden px-4 text-center"
+>
+  <!-- Ícono de éxito -->
+  <div class="z-10 mb-6">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-24 w-24 text-success animate-bounce"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 13l4 4L19 7"
+      />
+    </svg>
+  </div>
+
+  <!-- Mensaje principal -->
+  <h1 class="z-10 text-4xl font-extrabold mb-2">¡Pedido procesado!</h1>
+  <p class="z-10 text-lg mb-6 max-w-lg">
+    Tu orden ha sido recibida y está siendo preparada. Pronto te enviaremos la
+    confirmación de envío.
+  </p>
+
+  <!-- Botones de acción -->
+  <div class="z-10 flex flex-col sm:flex-row gap-4">
+    <a routerLink="/products" class="btn btn-outline btn-primary btn-lg">
+      Seguir comprando
+    </a>
+  </div>
+</div>

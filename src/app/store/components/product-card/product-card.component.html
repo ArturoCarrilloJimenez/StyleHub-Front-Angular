@@ -8,18 +8,17 @@
     ></shared-carousel-product>
   </figure>
   <div class="card-body p-4">
-    <!-- TODO cambiar por ruta de detalles producto -->
-    <a [routerLink]="`/products/${product.slug}`">
+    <div [routerLink]="`/products/${product.slug}`" class="cursor-pointer">
       <h2
         class="card-title text-xl font-semibold flex items-center justify-between hover:text-primary"
       >
         {{ product.title }}
         <div *ngIf="isNewProduct()" class="badge badge-secondary">NEW</div>
       </h2>
-    </a>
-    <p class="text-gray-400 text-sm mb-4">
-      {{ product.description | limitCharacterText : 150 }}
-    </p>
+      <p class="text-gray-400 text-sm mb-4">
+        {{ product.description | limitCharacterText : 150 }}
+      </p>
+    </div>
 
     <div class="flex justify-around items-center">
       <p class="text-2xl font-bold">

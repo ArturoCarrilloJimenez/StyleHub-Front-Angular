@@ -24,10 +24,11 @@ export class ProductEditService {
     page: number = 1,
     activeProducts: boolean = true
   ) {
+    let activeProductsParam = +activeProducts;
     return this.http
       .get<ProductsResponse>(
         this.URL +
-          `products/?limit=${limit}&page=${page}&activeProducts=${activeProducts}`
+          `products/?limit=${limit}&page=${page}&activeProducts=${activeProductsParam}`
       )
       .pipe(
         tap((resp) => {
@@ -108,6 +109,17 @@ export class ProductEditService {
       catchError((error: any) => {
         throw new Error(
           'It was not possible to load product. Please try again later.'
+        );
+      })
+    );
+  }
+
+  activeProduct(idSlug: string) {
+    return this.http.get<Product>(this.URL + `products/${idSlug}/active`).pipe(
+      map((resp) => resp),
+      catchError((error: any) => {
+        throw new Error(
+          'It was not possible active product. Please try again later.'
         );
       })
     );

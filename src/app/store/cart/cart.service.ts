@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
 import { catchError, map, tap } from 'rxjs';
 import { CartResponse, ProductCart } from './interfaces/cart.intreface';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -11,7 +12,10 @@ export class CartService {
   private _cart = signal<CartResponse | null>(null);
   private _cartProduct = signal<ProductCart | null>(null);
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly router: Router
+  ) {}
 
   cart = computed<CartResponse | null>(() => this._cart());
   cartProduct = computed<ProductCart | null>(() => this._cartProduct());
@@ -90,6 +94,23 @@ export class CartService {
         catchError((error: any) => {
           throw {
             error: 'It was not possible delete cart. Please try again later.',
+          };
+        })
+      )
+      .subscribe();
+  }
+
+  generateOrder() {
+    this.httpClient
+      .post<{ url: string }>(`${this.BASE}order`, {
+        urlAcceptPayment: `${window.location.origin}/order-success`,
+        urlCancelPayment: window.location.href,
+      })
+      .pipe(
+        tap((orderUrl) => (window.location.href = orderUrl.url)),
+        catchError((error: any) => {
+          throw {
+            error: 'It was not possible create order. Please try again later.',
           };
         })
       )
