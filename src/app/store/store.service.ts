@@ -6,22 +6,51 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environments';
 import { catchError, map, tap } from 'rxjs';
+import { GetProductParam } from './interfaces/get-product-params.interface';
+import { TypeProductResponse } from './interfaces/product-type.interface';
 
 @Injectable({
   providedIn: 'any',
 })
 export class StoreProductsService {
-  private URL = environment.baseUrl;
+  protected URL = environment.baseUrl;
 
-  private _products = signal<ProductsResponse | null>(null);
+  protected _products = signal<ProductsResponse | null>(null);
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(protected readonly http: HttpClient) {}
 
   products = computed<ProductsResponse | null>(() => this._products());
 
-  getProducts(limit: number = 12, page: number = 1) {
+  getProducts({
+    limit = 12,
+    page = 1,
+    activeProducts = true,
+    types = [],
+    genders = [],
+    search = '',
+    minPrice = 0,
+    maxPrice = Number.MAX_SAFE_INTEGER,
+  }: GetProductParam) {
+    let activeProductsParam = +activeProducts;
+
+    const typesParam = types.reduce(
+      (params, types) => (params = params + `&types=${types}`),
+      ''
+    );
+    const gendersParam = genders.reduce(
+      (params, gender) => (params = params + `&genders=${gender}`),
+      ''
+    );
+
+    console.log(
+      `products/?limit=${limit}&page=${page}&activeProducts=${activeProductsParam}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}${typesParam}${gendersParam}`
+    );
+
     return this.http
-      .get<ProductsResponse>(this.URL + `products/?limit=${limit}&page=${page}`)
+      .get<ProductsResponse>(
+        this.URL +
+          `products/?limit=${limit}&page=${page}&activeProducts=${activeProductsParam}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}${typesParam}${gendersParam}`
+      )
       .pipe(
         tap((resp) => {
           this._products.set(resp);
@@ -45,5 +74,18 @@ export class StoreProductsService {
         );
       })
     );
+  }
+
+  getAllCategory() {
+    return this.http
+      .get<TypeProductResponse[]>(this.URL + `products/type`)
+      .pipe(
+        map((resp) => resp),
+        catchError((error: any) => {
+          throw new Error(
+            'It was not possible to load product. Please try again later.'
+          );
+        })
+      );
   }
 }

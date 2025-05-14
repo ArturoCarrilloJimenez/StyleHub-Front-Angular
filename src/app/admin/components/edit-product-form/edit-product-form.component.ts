@@ -20,7 +20,7 @@ import {
 import { FormUtils } from '../../../utils/form-utils';
 import { ProductEditService } from '../../product-edit.service';
 import { Product } from '../../../store/interfaces/product-response.interface';
-import { TypeProductResponse } from '../../interfaces/product-type.interface';
+import { TypeProductResponse } from '../../../store/interfaces/product-type.interface';
 import { CommonModule } from '@angular/common';
 import { CarouselProductComponent } from '../../../store/components/carousel-product/carousel-product.component';
 import { ImageProduct } from '../../../store/interfaces/images-products.interface';
@@ -29,6 +29,10 @@ import {
   CreateProduct,
   FileUrl,
 } from '../../interfaces/create-product.interface';
+import {
+  GENDERS,
+  SIZES,
+} from '../../../store/cart/interfaces/product-detail.interface';
 
 @Component({
   selector: 'admin-edit-product-form',
@@ -62,8 +66,8 @@ export class EditProductFormComponent implements OnChanges, OnInit {
   });
 
   typeProduct = signal<TypeProductResponse[]>([]);
-  gender = ['men', 'women', 'kid', 'unisex'];
-  sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  gender = GENDERS;
+  sizes = SIZES;
 
   formUtils = FormUtils;
 

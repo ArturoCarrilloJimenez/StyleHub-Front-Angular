@@ -1,10 +1,31 @@
 <store-products-init-image></store-products-init-image>
+<store-filter-product
+  (filtersEmitter)="chargeProduct($event)"
+></store-filter-product>
 <section class="text-center mt-5">
   @if (isLoading()) {
   <shared-loading></shared-loading>
   <p class="mt-1">Charge products</p>
-  } @else { @if (products() == null) {
-  <p>No products available, please try again later.</p>
+  } @else { @if (products() == null || products()?.data?.length == 0) {
+  <div class="flex flex-col items-center justify-center text-center py-16">
+    <svg
+      class="w-16 h-16 text-gray-400 mb-4"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M3 3h18v4H3V3zm0 6h18v12H3V9z"
+      />
+    </svg>
+    <h2 class="text-2xl font-bold text-gray-600">No products available</h2>
+    <p class="text-gray-500 mt-2">
+      We're currently out of products. Please check back later.
+    </p>
+  </div>
   }
   <div
     class="container mx-auto px-4 grid justify-items-center gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -24,7 +45,7 @@
         prevPage: products()!.prevPage,
         nextPage: products()!.nextPage
       }"
-      (emite)="chargeProduct($event)"
+      (emite)="chargeProduct({ page: $event })"
     ></shared-paginate>
   </div>
   }

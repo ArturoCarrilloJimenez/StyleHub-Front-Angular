@@ -16,7 +16,7 @@ async function diley(ms: number) {
 export class FormUtils {
   // Expresiones regulares
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
-  static emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i
+  static emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
   static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
   static passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
@@ -36,6 +36,9 @@ export class FormUtils {
 
         case 'email':
           return `Este correo no es valido`;
+
+        case 'minGreaterThanMax':
+          return 'Mínimo inválido: debe ser entre 0 y el máximo';
 
         case 'pattern':
           // Comprobación de los patrones
@@ -106,6 +109,29 @@ export class FormUtils {
         formGroup.get(field2)?.setErrors({ noMatch: true });
         return { noMatch: true };
       } else {
+        formGroup.get(field2)?.setErrors(null);
+        return null;
+      }
+    };
+  }
+
+  static minNotGreaterThanMax(field1: string, field2: string) {
+    return (formGroup: FormGroup) => {
+      const min = formGroup.get(field1)?.value;
+      const max = formGroup.get(field2)?.value;
+
+      if (min < 0 || max < 0) {
+        formGroup.get(field1)?.setErrors({ minGreaterThanMax: true });
+        formGroup.get(field2)?.setErrors({ minGreaterThanMax: true });
+        return { minGreaterThanMax: true };
+      }
+
+      if (min > max) {
+        formGroup.get(field1)?.setErrors({ minGreaterThanMax: true });
+        formGroup.get(field2)?.setErrors({ minGreaterThanMax: true });
+        return { minGreaterThanMax: true };
+      } else {
+        formGroup.get(field1)?.setErrors(null);
         formGroup.get(field2)?.setErrors(null);
         return null;
       }
