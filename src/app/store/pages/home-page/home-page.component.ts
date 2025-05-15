@@ -6,8 +6,8 @@ import {
   InformativeCompositionHomeComponent,
 } from '../../components/';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
-import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
 import { RouterLink } from '@angular/router';
+import { SkeletonCartComponent } from "../../../shared/components/skeleton-cart/skeleton-cart.component";
 
 @Component({
   selector: 'app-home-page',
@@ -15,9 +15,9 @@ import { RouterLink } from '@angular/router';
   imports: [
     InitialImageHomeComponent,
     ProductCardComponent,
-    LoadingCardComponent,
     RouterLink,
     InformativeCompositionHomeComponent,
+    SkeletonCartComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -25,6 +25,8 @@ import { RouterLink } from '@angular/router';
 export class HomePageComponent implements OnInit {
   products = signal<ProductsResponse | null>(null);
   isLoading = signal(true);
+
+  skeletonArray = Array.from({ length: 4 });
 
   constructor(private readonly productsService: StoreProductsService) {}
 

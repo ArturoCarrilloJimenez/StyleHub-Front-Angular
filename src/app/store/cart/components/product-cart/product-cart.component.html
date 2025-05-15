@@ -47,7 +47,7 @@
             type="button"
             class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
             (click)="updateProductCart(product.product.id)"
-            [disabled]="isServerUpdate()"
+            [disabled]="isServerUpdate() || product.product.stock <= quantity()"
           >
             +
           </button>

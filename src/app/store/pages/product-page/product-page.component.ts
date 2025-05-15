@@ -5,18 +5,18 @@ import {
   ProductCardComponent,
   InitImageProductsComponent,
 } from '../../components/';
-import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
 import { PaginateComponent } from '../../../shared/components/paginate/paginate.component';
 import { FilterProductComponent } from '../../components/filter-product/filter-product.component';
 import { GetProductParam } from '../../interfaces/get-product-params.interface';
+import { SkeletonCartComponent } from "../../../shared/components/skeleton-cart/skeleton-cart.component";
 @Component({
   selector: 'app-product-page',
   imports: [
     ProductCardComponent,
-    LoadingCardComponent,
     InitImageProductsComponent,
     PaginateComponent,
     FilterProductComponent,
+    SkeletonCartComponent,
   ],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss',
@@ -26,6 +26,7 @@ export class ProductPageComponent {
     this.productsService.products()
   );
   isLoading = signal(true);
+  skeletonArray = Array.from({ length: 12 });
 
   constructor(private readonly productsService: StoreProductsService) {}
 
