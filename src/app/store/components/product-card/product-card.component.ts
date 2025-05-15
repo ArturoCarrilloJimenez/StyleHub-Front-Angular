@@ -1,11 +1,4 @@
-import {
-  Component,
-  computed,
-  Input,
-  OnChanges,
-  signal,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, computed, Input, signal } from '@angular/core';
 import { Product } from '../../interfaces/product-response.interface';
 import { environment } from '../../../../environments/environments';
 import { LimitCharacterTextPipe } from '../../../shared/pipes/limit-character-text.pipe';
@@ -16,6 +9,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
 import { CartService } from '../../cart/cart.service';
 import { isNewProduct } from '../../utils/new-product.util';
+import { ButtonAddCartComponent } from '../../../shared/components/button-add-cart/button-add-cart.component';
 
 @Component({
   selector: 'shop-product-card',
@@ -25,6 +19,7 @@ import { isNewProduct } from '../../utils/new-product.util';
     CarouselProductComponent,
     CommonModule,
     RouterLink,
+    ButtonAddCartComponent,
   ],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
@@ -60,6 +55,6 @@ export class ProductCardComponent {
       return;
     }
 
-    this.cartService.setProduct(id).subscribe();
+    this.cartService.setProduct(id).subscribe({});
   }
 }

@@ -7,7 +7,7 @@ import {
 } from '../../components/';
 import { ProductsResponse } from '../../interfaces/product-response.interface';
 import { RouterLink } from '@angular/router';
-import { SkeletonCartComponent } from "../../../shared/components/skeleton-cart/skeleton-cart.component";
+import { SkeletonCartComponent } from '../../../shared/components/skeleton-cart/skeleton-cart.component';
 
 @Component({
   selector: 'app-home-page',
@@ -34,9 +34,12 @@ export class HomePageComponent implements OnInit {
     this.products.set(this.productsService.products());
 
     if (this.products() == null)
-      this.productsService.getProducts({ limit: 4 }).subscribe(() => {
-        this.products.set(this.productsService.products());
-        this.isLoading.set(false);
+      this.productsService.getProducts({ limit: 4 }).subscribe({
+        next: () => {
+          this.products.set(this.productsService.products());
+          this.isLoading.set(false);
+        },
+        error: () => this.isLoading.set(false),
       });
     else this.isLoading.set(false);
   }

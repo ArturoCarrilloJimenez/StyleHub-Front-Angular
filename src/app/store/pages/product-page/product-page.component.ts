@@ -8,7 +8,7 @@ import {
 import { PaginateComponent } from '../../../shared/components/paginate/paginate.component';
 import { FilterProductComponent } from '../../components/filter-product/filter-product.component';
 import { GetProductParam } from '../../interfaces/get-product-params.interface';
-import { SkeletonCartComponent } from "../../../shared/components/skeleton-cart/skeleton-cart.component";
+import { SkeletonCartComponent } from '../../../shared/components/skeleton-cart/skeleton-cart.component';
 @Component({
   selector: 'app-product-page',
   imports: [
@@ -38,8 +38,9 @@ export class ProductPageComponent {
     this.isLoading = signal(true);
     this.productsService
       .getProducts(getProductsParam ?? { limit: 12, page: 1 })
-      .subscribe(() => {
-        this.isLoading.set(false);
+      .subscribe({
+        next: () => this.isLoading.set(false),
+        error: () => this.isLoading.set(false),
       });
   }
 }
