@@ -48,7 +48,7 @@ export class ProductEditPageComponent {
   chargeProduct(page: number = 1, limit: number = 12) {
     this.isLoading = signal(true);
     this.productEditService
-      .getProducts(limit, page, this.isActiveProduct())
+      .getProducts({ limit, page, activeProducts: this.isActiveProduct() })
       .subscribe(() => {
         this.isLoading.set(false);
       });

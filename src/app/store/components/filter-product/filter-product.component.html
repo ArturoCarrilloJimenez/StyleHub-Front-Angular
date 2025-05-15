@@ -1,0 +1,145 @@
+<div class="drawer drawer-end z-100">
+  <input id="filter-drawer" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <!-- Page content here -->
+    <label
+      for="filter-drawer"
+      class="btn rounded-full btn-outline bg-base-100 drawer-button btn-lg fixed bottom-10 end-3"
+    >
+      <ng-icon name="heroAdjustmentsHorizontalMini" size="2rem"></ng-icon>
+    </label>
+  </div>
+  <div class="drawer-side">
+    <label
+      for="filter-drawer"
+      aria-label="close sidebar"
+      class="drawer-overlay"
+    ></label>
+    <form
+      (submit)="saveFilters()"
+      [formGroup]="filtersForm"
+      class="flex flex-col justify-between bg-base-200 text-base-content min-h-full w-80 p-4 pt-16"
+    >
+      <!-- Filtros -->
+      <ul class="menu w-full">
+        <!-- Search -->
+        <label class="input w-full">
+          <ng-icon
+            name="heroMagnifyingGlassCircleSolid"
+            size="1.2em"
+            class="opacity-50"
+          ></ng-icon>
+          <input
+            width="100px"
+            type="text"
+            placeholder="Search Product"
+            formControlName="search"
+          />
+        </label>
+
+        <!-- Type -->
+        <div
+          class="collapse collapse-plus"
+          [class.collapse-open]="colapseValues['isTypesOpen']()"
+        >
+          <div
+            class="collapse-title font-semibold"
+            (click)="toggleCollapse('isTypesOpen')"
+          >
+            Type
+          </div>
+          <div class="collapse-content text-sm">
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                *ngFor="let type of types"
+                class="btn btn-sm btn-outline rounded-full px-4"
+                [ngClass]="{
+                  'btn-primary btn-active': isSelectedValue(type.name, 'types')
+                }"
+                (click)="updateType(type.name, 'types')"
+              >
+                {{ type.name }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div
+          class="collapse collapse-plus"
+          [class.collapse-open]="colapseValues['isGenderOpen']()"
+        >
+          <div
+            class="collapse-title font-semibold"
+            (click)="toggleCollapse('isGenderOpen')"
+          >
+            Gender
+          </div>
+          <div class="collapse-content text-sm">
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                *ngFor="let gender of genders"
+                class="btn btn-sm btn-outline rounded-full px-4"
+                [ngClass]="{
+                  'btn-primary btn-active': isSelectedValue(gender, 'genders')
+                }"
+                (click)="updateType(gender, 'genders')"
+              >
+                {{ gender }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Min Price -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Min Price</label>
+            <input
+              type="number"
+              placeholder="Min Price"
+              formControlName="minPrice"
+              class="input input-bordered w-full"
+            />
+          </div>
+
+          <!-- Max Price -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Max Price</label>
+            <input
+              type="number"
+              placeholder="Max Price"
+              formControlName="maxPrice"
+              class="input input-bordered w-full"
+            />
+          </div>
+          @if (formUtils.isValidField(filtersForm, 'minPrice')) {
+          <div class="text-xs text-error mt-2 col-span-2">
+            {{ formUtils.getFielError(filtersForm, "minPrice") }}
+          </div>
+          }
+        </div>
+      </ul>
+
+      <!-- Botones en la parte inferior -->
+      <div class="flex justify-center w-full pb-4 mt-6 space-x-4">
+        <button
+          type="submit"
+          class="btn btn-primary rounded-full"
+          [disabled]="!filtersForm.valid"
+        >
+          Apply filters
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline rounded-full"
+          (click)="clearFilter()"
+        >
+          Clear all
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
