@@ -33,25 +33,12 @@
         <h3 class="text-base font-semibold">
           {{ product.product.price | currency : "EUR" : "symbol" }}
         </h3>
-        <div class="flex items-center">
-          <button
-            type="button"
-            class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
-            (click)="updateProductCart(product.product.id, false)"
-            [disabled]="quantity() <= 0 || isServerUpdate()"
-          >
-            -
-          </button>
-          <span class="text-lg px-4 font-bold">{{ quantity() }}</span>
-          <button
-            type="button"
-            class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
-            (click)="updateProductCart(product.product.id)"
-            [disabled]="isServerUpdate() || product.product.stock <= quantity()"
-          >
-            +
-          </button>
-        </div>
+        <button-group-edit-quantity
+          [isServerUpdate]="isServerUpdate()"
+          [stock]="product.product.stock"
+          [quantity]="product.quantity"
+          (changeQuantity)="updateProductCart(product.product.id, $event)"
+        ></button-group-edit-quantity>
       </div>
     </div>
   </div>
