@@ -16,12 +16,13 @@ import { CartResponse } from './interfaces/cart.intreface';
 import { RouterLink } from '@angular/router';
 import { ProductCartComponent } from './components/product-cart/product-cart.component';
 import { heroTruckSolid } from '@ng-icons/heroicons/solid';
+import { LoadingCardComponent } from "../../shared/components/loading/loading.component";
 
 // mejorar la estética del carrito
 @Component({
   selector: 'store-cart',
   standalone: true,
-  imports: [NgIcon, CommonModule, RouterLink, ProductCartComponent],
+  imports: [NgIcon, CommonModule, RouterLink, ProductCartComponent, LoadingCardComponent],
   viewProviders: [provideIcons({ heroShoppingCartMini, heroTruckSolid })],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
@@ -29,6 +30,7 @@ import { heroTruckSolid } from '@ng-icons/heroicons/solid';
 export class CartComponent implements OnInit {
   cart = computed<CartResponse | null>(() => this.cartService.cart());
   showCart = signal(false);
+  isLoading = signal(false);
 
   constructor(
     private readonly authService: AuthService,
@@ -68,6 +70,11 @@ export class CartComponent implements OnInit {
   }
 
   orderProduct() {
-    this.cartService.generateOrder();
+    this.isLoading.set(true);
+    this.cartService.generateOrder().subscribe({
+      next: (resp) => {
+        this.isLoading.set(false);
+      },
+    });
   }
 }

@@ -101,7 +101,7 @@ export class CartService {
   }
 
   generateOrder() {
-    this.httpClient
+    return this.httpClient
       .post<{ url: string }>(`${this.BASE}order`, {
         urlAcceptPayment: `${window.location.origin}/order-success`,
         urlCancelPayment: window.location.href,
@@ -113,7 +113,6 @@ export class CartService {
             error: 'It was not possible create order. Please try again later.',
           };
         })
-      )
-      .subscribe();
+      );
   }
 }
