@@ -7,8 +7,8 @@
   >
     <div class="indicator">
       <ng-icon name="heroShoppingCartMini" size="1.5rem"></ng-icon>
-      <span class="badge badge-sm indicator-item">{{
-        cart()?.products?.length | number
+      <span class="badge badge-primary badge-sm badge indicator-item">{{
+        (cart()?.products?.length | number) ?? 0
       }}</span>
     </div>
   </div>
@@ -26,8 +26,13 @@
       ></shop-cart-product>
       <div class="card-actions">
         <button class="btn btn-primary btn-block z-1" (click)="orderProduct()">
-          <ng-icon name="heroTruckSolid" size="1.25rem"></ng-icon>
-          Finalize Purchase
+          @if (!isLoading()) {<ng-icon
+            name="heroTruckSolid"
+            size="1.25rem"
+          ></ng-icon>
+          Finalize Purchase} @else {
+          <shared-loading></shared-loading>
+          }
         </button>
       </div>
       } @else {

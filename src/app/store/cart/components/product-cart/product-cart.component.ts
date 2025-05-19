@@ -13,11 +13,19 @@ import { heroTrash } from '@ng-icons/heroicons/outline';
 import { CartService } from '../../cart.service';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { EditQuintityButtonsComponent } from "../../../../shared/components/edit-quintity-buttons/edit-quintity-buttons.component";
 
 @Component({
   selector: 'shop-cart-product',
   standalone: true,
-  imports: [CommonModule, LimitCharacterTextPipe, NgIcon, RouterLink, FormsModule],
+  imports: [
+    CommonModule,
+    LimitCharacterTextPipe,
+    NgIcon,
+    RouterLink,
+    FormsModule,
+    EditQuintityButtonsComponent,
+  ],
   viewProviders: [provideIcons({ heroTrash })],
   templateUrl: './product-cart.component.html',
   styleUrl: './product-cart.component.scss',
@@ -25,8 +33,8 @@ import { FormsModule } from '@angular/forms';
 export class ProductCartComponent implements OnInit {
   private BASE = environment.baseUrl;
   urlImage = '';
-  quantity = signal(0);
   size = signal<string>('');
+  quantity = signal(0);
 
   timeoutId: any = null;
   isServerUpdate = signal(false);
@@ -37,14 +45,13 @@ export class ProductCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.urlImage = `${this.BASE}files/product/${this.product.product.images[0]}`;
-    this.quantity.set(this.product.quantity);
     this.size.set(this.product.size);
   }
 
-  updateProductCart(idProduct: string, isAddProduct: boolean = true) {
-    this.quantity.set(isAddProduct ? this.quantity() + 1 : this.quantity() - 1);
-
+  updateProductCart(idProduct: string, quantity?: number) {
     if (this.timeoutId !== null) clearTimeout(this.timeoutId);
+
+    if (quantity) this.quantity.set(quantity);
 
     this.timeoutId = setTimeout(() => {
       if (this.quantity() <= 0) this.deleteProduct(idProduct);

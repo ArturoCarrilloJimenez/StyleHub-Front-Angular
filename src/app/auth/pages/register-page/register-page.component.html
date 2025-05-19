@@ -1,18 +1,21 @@
 <div class="p-5 shadow-xl bg-base-200">
-  <h1 class="text-2xl mb-2 font-boldb-6 text-center">Sign Up</h1>
-
-  <!-- Error -->
-  @if (hasError()) {
-  <div role="alert" class="alert alert-error alert-soft mb-3">
-    <p>Verify that the email or username is not registered.</p>
-  </div>
-  }
+  <h1 class="text-2xl mb-2 font-boldb-6 text-center">Register</h1>
+  <p class="text-sm text-center text-gray-600 mb-4">
+    Create an account to start using StyleHub
+  </p>
 
   <form
     class="space-y-4 w-75 sm:w-100"
     [formGroup]="registerForm"
     (ngSubmit)="onSubmit()"
   >
+    <!-- Error -->
+    @if (hasError()) {
+    <div role="alert" class="alert alert-error alert-soft mb-3">
+      <p>Verify that the email or username is not registered.</p>
+    </div>
+    }
+
     <!-- Email Input -->
     <div>
       <label class="input w-full">
@@ -98,7 +101,7 @@
     </div>
 
     <button type="submit" [disabled]="isValidForm" class="btn btn-soft w-full">
-      Sing Up
+      @if (!isLoading()) {Register} @else {<shared-loading></shared-loading>}
     </button>
   </form>
 
@@ -108,7 +111,7 @@
       routerLink="/auth/login"
       class="text-indigo-600 hover:text-indigo-500 font-medium"
     >
-      Sign in
+      Login
     </a>
   </div>
 </div>

@@ -4,7 +4,9 @@
 </div>
 
 <div *ngIf="!isLoad() && product() != null" class="p-4 max-w-7xl mx-auto">
-  <h1 class="card-title text-4xl font-semibold flex items-center justify-between pb-6">
+  <h1
+    class="card-title text-4xl font-semibold flex items-center justify-between pb-6"
+  >
     {{ product()?.title }}
     <div *ngIf="isNewProduct()" class="badge badge-secondary">NEW</div>
   </h1>
@@ -38,31 +40,17 @@
       </div>
 
       <div>
-        <div class="flex items-center justify-center py-4">
-          <button
-            type="button"
-            class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
-            (click)="updateQuantity(false)"
-            [disabled]="quantity() <= 0"
-          >
-            -
-          </button>
-          <span class="text-lg px-4 font-bold">{{ quantity() }}</span>
-          <button
-            type="button"
-            class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
-            (click)="updateQuantity()"
-          >
-            +
-          </button>
+        <div class="mb-4">
+          <button-group-edit-quantity
+          [stock]="product()!.stock"
+          [quantity]="1"
+          (changeQuantity)="quantity.set($event)"
+        >
+        </button-group-edit-quantity>
         </div>
 
-        <button
-          class="btn btn-outline btn-primary rounded-full w-full"
-          (click)="addCart(product()?.id ?? '')"
-        >
-          ADD TO CART
-        </button>
+        <button-add-cart class="w-full" (click)="addCart(product()?.id ?? '')">
+        </button-add-cart>
       </div>
     </div>
   </section>

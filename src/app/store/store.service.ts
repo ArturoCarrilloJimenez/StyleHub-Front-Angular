@@ -42,10 +42,6 @@ export class StoreProductsService {
       ''
     );
 
-    console.log(
-      `products/?limit=${limit}&page=${page}&activeProducts=${activeProductsParam}&search=${search}&minPrice=${minPrice}&maxPrice=${maxPrice}${typesParam}${gendersParam}`
-    );
-
     return this.http
       .get<ProductsResponse>(
         this.URL +

@@ -12,11 +12,12 @@ import { FormUtils } from '../../../utils/form-utils';
 
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroEnvelope, heroKey, heroUser } from '@ng-icons/heroicons/outline';
+import { LoadingCardComponent } from "../../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, NgIcon],
+  imports: [RouterLink, ReactiveFormsModule, NgIcon, LoadingCardComponent],
   viewProviders: [provideIcons({ heroEnvelope, heroKey, heroUser })],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.scss',
@@ -24,6 +25,7 @@ import { heroEnvelope, heroKey, heroUser } from '@ng-icons/heroicons/outline';
 export class RegisterPageComponent {
   private fb = inject(FormBuilder);
   hasError = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
 
   formUtils = FormUtils;
 
@@ -62,6 +64,7 @@ export class RegisterPageComponent {
     console.log(this.registerForm.controls);
 
     if (this.registerForm.valid) {
+      this.isLoading.set(true);
       const { rememberLogin, confirmPassword, ...data } =
         this.registerForm.value;
 
@@ -75,6 +78,7 @@ export class RegisterPageComponent {
             return;
           }
 
+          this.isLoading.set(false);
           this.hasError.set(true);
           setTimeout(() => {
             this.hasError.set(false);

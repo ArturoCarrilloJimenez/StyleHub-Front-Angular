@@ -1,15 +1,20 @@
 <div
   id="hero"
   class="hero"
-  style="background-image: url(/images/home-portada.jpg);">
+  style="background-image: url(/images/home-portada.jpg)"
+>
   <div class="hero-overlay"></div>
   <div class="hero-content text-neutral-content text-center">
     <div class="max-w-md">
       <h1 class="mb-5 text-6xl mb-4 font-extrabold sm:text-8xl">{{ title }}</h1>
-      <p class="mb-5">
-        Make every outfit a style statement, only on StyleHub.
-      </p>
-      <button [routerLink]="['/products']" routerLinkActive="router-link-active"  class="btn btn-primary">Show product</button>
+      <p class="mb-5">Make every outfit a style statement, only on StyleHub.</p>
+      <button
+        [routerLink]="['/products']"
+        routerLinkActive="router-link-active"
+        class="btn btn-primary"
+      >
+        Show product
+      </button>
     </div>
   </div>
 </div>

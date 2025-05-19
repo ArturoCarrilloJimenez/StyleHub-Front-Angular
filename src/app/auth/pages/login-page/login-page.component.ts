@@ -12,11 +12,12 @@ import { AuthService } from '../../auth.service';
 
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroEnvelope, heroKey } from '@ng-icons/heroicons/outline';
+import { LoadingCardComponent } from "../../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, NgIcon],
+  imports: [RouterLink, ReactiveFormsModule, NgIcon, LoadingCardComponent],
   viewProviders: [provideIcons({ heroEnvelope, heroKey })],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
@@ -24,6 +25,7 @@ import { heroEnvelope, heroKey } from '@ng-icons/heroicons/outline';
 export class LoginPageComponent {
   private fb = inject(FormBuilder);
   hasError = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
 
   formUtils = FormUtils;
   emailPater = this.formUtils.emailPattern;
@@ -47,6 +49,7 @@ export class LoginPageComponent {
     this.loginForm.markAllAsTouched();
 
     if (this.loginForm.valid) {
+      this.isLoading.set(true);
       const { email, password, rememberLogin } = this.loginForm.value;
 
       this.authService
@@ -57,6 +60,7 @@ export class LoginPageComponent {
             return;
           }
 
+          this.isLoading.set(false);
           this.hasError.set(true);
           setTimeout(() => {
             this.hasError.set(false);

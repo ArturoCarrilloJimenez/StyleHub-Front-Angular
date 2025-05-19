@@ -1,0 +1,7 @@
+<button
+class="btn btn-outline btn-primary rounded-full w-full"
+[ngClass]="{'btn-outline btn-primary': !btnAddCart(), 'btn-success': btnAddCart(),}"
+(click)="addCart()"
+>
+{{ !btnAddCart() ? "ADD TO CART" : "PRODUCT ADDED" }}
+</button>

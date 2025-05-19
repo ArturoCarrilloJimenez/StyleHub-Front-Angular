@@ -11,11 +11,13 @@ import { AuthService } from '../../../auth/auth.service';
 import { CartService } from '../../cart/cart.service';
 import { Product } from '../../interfaces/product-response.interface';
 import { ProductCart } from '../../cart/interfaces/cart.intreface';
+import { ButtonAddCartComponent } from "../../../shared/components/button-add-cart/button-add-cart.component";
+import { EditQuintityButtonsComponent } from "../../../shared/components/edit-quintity-buttons/edit-quintity-buttons.component";
 
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
-  imports: [CommonModule, LoadingCardComponent, CarouselProductComponent],
+  imports: [CommonModule, LoadingCardComponent, CarouselProductComponent, ButtonAddCartComponent, EditQuintityButtonsComponent],
   templateUrl: './product-detail-page.component.html',
   styleUrl: './product-detail-page.component.scss',
 })
@@ -89,11 +91,5 @@ export class ProductDetailPageComponent implements OnInit {
 
   chargeProductCart() {
     console.log(this.cartService.getOneProductCart(this.product()?.id ?? ''));
-  }
-
-  updateQuantity(isAddProduct = true) {
-    isAddProduct
-      ? this.quantity.set(this.quantity() + 1)
-      : this.quantity.set(this.quantity() - 1);
   }
 }

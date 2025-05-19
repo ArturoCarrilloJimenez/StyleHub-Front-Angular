@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroArchiveBoxSolid } from '@ng-icons/heroicons/solid';
 import { EditProductFormComponent } from '../../components/edit-product-form/edit-product-form.component';
+import { FilterProductComponent } from '../../../store/components/filter-product/filter-product.component';
+import { GetProductParam } from '../../../store/interfaces/get-product-params.interface';
 
 @Component({
   selector: 'app-product-edit-page',
@@ -24,6 +26,7 @@ import { EditProductFormComponent } from '../../components/edit-product-form/edi
     FormsModule,
     ReactiveFormsModule,
     EditProductFormComponent,
+    FilterProductComponent,
   ],
   viewProviders: [provideIcons({ heroArchiveBoxSolid })],
   templateUrl: './product-edit-page.component.html',
@@ -42,15 +45,22 @@ export class ProductEditPageComponent {
   constructor(private readonly productEditService: ProductEditService) {}
 
   ngOnInit(): void {
-    this.chargeProduct();
+    this.chargeProduct({});
   }
 
-  chargeProduct(page: number = 1, limit: number = 12) {
+  chargeProduct(param: GetProductParam) {
     this.isLoading = signal(true);
+    const { page = 1, limit = 12 } = param;
     this.productEditService
-      .getProducts({ limit, page, activeProducts: this.isActiveProduct() })
-      .subscribe(() => {
-        this.isLoading.set(false);
+      .getProducts({
+        ...param,
+        limit,
+        page,
+        activeProducts: this.isActiveProduct(),
+      })
+      .subscribe({
+        next: () => this.isLoading.set(false),
+        error: () => this.isLoading.set(false),
       });
   }
 
@@ -63,18 +73,18 @@ export class ProductEditPageComponent {
 
   viewActiveProduct() {
     this.isActiveProduct.set(!this.isActiveProduct());
-    this.chargeProduct();
+    this.chargeProduct({});
   }
 
   deleteProduct(id: string) {
     this.productEditService.deleteProduct(id).subscribe(() => {
-      this.chargeProduct();
+      this.chargeProduct({});
     });
   }
 
   activeProduct(id: string) {
     this.productEditService.activeProduct(id).subscribe(() => {
-      this.chargeProduct();
+      this.chargeProduct({});
     });
   }
 

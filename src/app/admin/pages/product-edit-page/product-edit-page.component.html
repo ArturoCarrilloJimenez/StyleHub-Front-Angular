@@ -1,8 +1,12 @@
 <div class="p-4">
-  <div class="flex justify-center flex-col sm:flex-row sm:justify-between ">
+  <div class="flex justify-center flex-col sm:flex-row sm:justify-between">
     <h2 class="text-center font-extrabold text-3xl mb-4">Edit Product</h2>
     <div class="flex justify-center">
-      <button class="btn btn-outline mr-2" *ngIf="!isViewEditForm()" (click)="viewActiveProduct()">
+      <button
+        class="btn btn-outline mr-2"
+        *ngIf="!isViewEditForm()"
+        (click)="viewActiveProduct()"
+      >
         {{ isActiveProduct() ? "All Product" : "Active Product" }}
       </button>
       <button class="btn btn-primary mr-4" (click)="newProduct()">
@@ -12,7 +16,8 @@
   </div>
   <section *ngIf="!isViewEditForm(); else formProduct" class="mt-4 text-center">
     <h3 class="text-center font-semibold mb-2">
-      Total Product <span class="text-secondary">{{ products()?.count }}</span> {{ isActiveProduct() ? 'Actives' : ''}}
+      Total Product <span class="text-secondary">{{ products()?.count }}</span>
+      {{ isActiveProduct() ? "Actives" : "" }}
     </h3>
     @if (isLoading()) {
     <shared-loading></shared-loading>
@@ -37,7 +42,7 @@
         prevPage: products()!.prevPage,
         nextPage: products()!.nextPage
       }"
-      (emite)="chargeProduct($event)"
+      (emite)="chargeProduct({page: $event})"
     ></shared-paginate>
     }
   </section>
@@ -46,8 +51,11 @@
     <div class="text-center">
       <admin-edit-product-form
         [productEdit]="product()"
-        (editProductEmitter)="isViewEditForm.set($event); chargeProduct()"
+        (editProductEmitter)="isViewEditForm.set($event); chargeProduct({})"
       ></admin-edit-product-form>
     </div>
   </ng-template>
 </div>
+<store-filter-product
+  (filtersEmitter)="chargeProduct($event)"
+></store-filter-product>

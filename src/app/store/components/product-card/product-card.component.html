@@ -1,4 +1,6 @@
 <div
+  data-aos="fade-up"
+  data-aos-duration="600"
   class="card bg-base-100 w-full h-full shadow-sm rounded-lg overflow-hidden text-start"
 >
   <figure>
@@ -25,12 +27,7 @@
         {{ product.price | currency : "EUR" : "symbol" }}
       </p>
       <div class="card-actions">
-        <button
-          class="btn btn-outline btn-primary rounded-full"
-          (click)="addCart(product.id)"
-        >
-          ADD TO CART
-        </button>
+        <button-add-cart (click)="addCart(product.id)"></button-add-cart>
       </div>
     </div>
   </div>

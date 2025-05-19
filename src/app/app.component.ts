@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ScrollService } from './utils/services/reset-scroll.service';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,10 @@ import { ScrollService } from './utils/services/reset-scroll.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private scrollService: ScrollService) {}
+
+  ngOnInit(): void {
+    AOS.init();
+  }
 }

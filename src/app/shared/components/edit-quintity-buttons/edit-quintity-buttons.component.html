@@ -1,0 +1,19 @@
+<div class="flex items-center justify-center">
+  <button
+    type="button"
+    class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
+    (click)="updateQuantity(false)"
+    [disabled]="quantity <= 0 || isServerUpdate"
+  >
+    -
+  </button>
+  <span class="text-lg px-4 font-bold">{{ quantityValue() }}</span>
+  <button
+    type="button"
+    class="btn btn-sm btn-circle flex items-center justify-center bg-base-300 outline-none"
+    (click)="updateQuantity()"
+    [disabled]="isServerUpdate || stock <= quantityValue()"
+  >
+    +
+  </button>
+</div>
