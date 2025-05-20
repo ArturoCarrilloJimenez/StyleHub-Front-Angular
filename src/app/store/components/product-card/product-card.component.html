@@ -1,7 +1,7 @@
 <div
   data-aos="fade-up"
   data-aos-duration="600"
-  class="card bg-base-100 w-full h-full shadow-sm rounded-lg overflow-hidden text-start"
+  class="card bg-base-100 w-full h-full shadow-sm rounded-lg overflow-hidden text-start transform transition-transform duration-300 ease-in-out hover:scale-[1.02]"
 >
   <figure>
     <shared-carousel-product
@@ -9,7 +9,7 @@
       [urlPage]="urlPage"
     ></shared-carousel-product>
   </figure>
-  <div class="card-body p-4">
+  <div class="card-body p-4 flex flex-col">
     <div [routerLink]="`/products/${product.slug}`" class="cursor-pointer">
       <h2
         class="card-title text-xl font-semibold flex items-center justify-between hover:text-primary"
@@ -22,7 +22,7 @@
       </p>
     </div>
 
-    <div class="flex justify-around items-center">
+    <div class="flex justify-around items-center mt-auto">
       <p class="text-2xl font-bold">
         {{ product.price | currency : "EUR" : "symbol" }}
       </p>

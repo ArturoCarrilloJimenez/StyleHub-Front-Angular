@@ -224,7 +224,7 @@ Para mantener la calidad y coherencia del código, siga estas pautas:
 
 3. **Flujo de trabajo con Git**  
    - Cree ramas temáticas siguiendo la convención:  
-     - `feat/<descripción>` para nuevas funcionalidades  
+     - `(feat / add)/<descripción>` para nuevas funcionalidades  
      - `fix/<descripción>` para correcciones de errores  
      - `chore/<descripción>` para tareas menores o actualizaciones de dependencias  
    - Use **Conventional Commits** en los mensajes (`feat:`, `fix:`, `docs:`, `refactor:`) para una mejor lectura del historial 
@@ -236,9 +236,6 @@ Para mantener la calidad y coherencia del código, siga estas pautas:
      - Pasos para reproducir el error o describir la mejora  
      - Capturas de pantalla o logs (si es relevante)  
      - Etiquetas apropiadas (`bug`, `enhancement`, `documentation`) 
-
-5. **Cobertura de pruebas**  
-   - Se recomienda mantener una cobertura de pruebas ≥ 90% con **Jasmine/Karma** para unit tests y **Cypress** para e2e (si se habilita en el futuro)
 
 ---
 
