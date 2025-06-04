@@ -68,8 +68,6 @@ export class RegisterPageComponent {
       const { rememberLogin, confirmPassword, ...data } =
         this.registerForm.value;
 
-      console.log('data valid');
-
       this.authService
         .register({ ...data }, rememberLogin)
         .subscribe((isAuthenticated) => {

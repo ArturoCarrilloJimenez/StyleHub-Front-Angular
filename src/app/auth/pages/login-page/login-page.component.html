@@ -1,14 +1,14 @@
 <div class="p-5 shadow-xl bg-base-200">
-  <h1 class="text-2xl mb-2 font-boldb-6 text-center">Login</h1>
-  <p class="text-sm text-gray-600 text-center mb-4">
-    Welcome back! Please enter your details.
-  </p>
-
   <form
     class="space-y-4 w-75 sm:w-100"
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"
   >
+    <h1 class="text-2xl mb-2 font-bold text-center">Login</h1>
+    <p class="text-sm text-gray-400 text-center mb-4">
+      Welcome back! Please enter your details.
+    </p>
+
     <!-- Error -->
     @if (hasError()) {
     <div role="alert" class="alert alert-error alert-soft mb-3">
@@ -59,12 +59,14 @@
           class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
           formControlName="rememberLogin"
         />
-        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+        <span class="ml-2 text-sm text-gray-500">Remember me</span>
       </label>
-      <!-- TODO recuperar cuenta, necesito modificar back -->
-      <!-- <a class="text-sm text-indigo-600 hover:text-indigo-500"
+
+      <a
+        routerLink="/auth/reset-password"
+        class="text-sm text-indigo-500 hover:text-indigo-400"
         >Forgot password?</a
-      > -->
+      >
     </div>
 
     <button type="submit" [disabled]="isValidForm" class="btn btn-soft w-full">
@@ -72,11 +74,11 @@
     </button>
   </form>
 
-  <div class="mt-6 text-center text-sm text-gray-600">
+  <div class="mt-6 text-center text-sm text-gray-500">
     Don't have an account?
     <a
       routerLink="/auth/register"
-      class="text-indigo-600 hover:text-indigo-500 font-medium"
+      class="text-indigo-500 hover:text-indigo-400 font-medium"
     >
       Register
     </a>
