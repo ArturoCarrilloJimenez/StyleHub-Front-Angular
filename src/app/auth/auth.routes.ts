@@ -26,6 +26,22 @@ export const authRoutes: Routes = [
           ),
       },
       {
+        path: 'reset-password',
+        title: `Reset Password | ${environment.title}`,
+        loadComponent: () =>
+          import('./pages/request-password/request-password.component').then(
+            (m) => m.RequestPasswordComponent
+          ),
+      },
+      {
+        path: 'reset-password/:token',
+        title: `Reset Password | ${environment.title}`,
+        loadComponent: () =>
+          import('./pages/reset-password/reset-password.component').then(
+            (m) => m.ResetPasswordComponent
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'login',
       },
