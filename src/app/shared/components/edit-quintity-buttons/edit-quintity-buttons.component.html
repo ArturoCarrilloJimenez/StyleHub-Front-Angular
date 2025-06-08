@@ -3,7 +3,7 @@
     type="button"
     class="btn btn-sm btn-circle flex items-center justify-center bg-slate-400 outline-none"
     (click)="updateQuantity(false)"
-    [disabled]="quantity <= 0 || isServerUpdate"
+    [disabled]="quantityValue() <= 0 || isServerUpdate"
   >
     -
   </button>
