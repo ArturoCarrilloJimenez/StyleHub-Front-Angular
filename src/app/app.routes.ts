@@ -10,12 +10,6 @@ export const routes: Routes = [
     canMatch: [NotAuthenticated],
   },
   {
-    path: 'profile',
-    loadChildren: () =>
-      import('./profile/profile.routes').then((m) => m.profileRoutes),
-    canMatch: [IsAuthenticated],
-  },
-  {
     path: 'dashboard-admin',
     loadChildren: () =>
       import('./admin/admin.routes').then((m) => m.adminRoutes),
