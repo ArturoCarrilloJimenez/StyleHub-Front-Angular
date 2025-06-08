@@ -59,7 +59,8 @@ export class ProductCartComponent implements OnInit {
   updateProductCart(idProduct: string, quantity?: number) {
     if (this.timeoutId !== null) clearTimeout(this.timeoutId);
 
-    if (quantity) this.quantity.set(quantity);
+    if (quantity !== undefined) this.quantity.set(quantity);
+
 
     this.timeoutId = setTimeout(() => {
       if (this.quantity() <= 0) this.deleteProduct(idProduct);
