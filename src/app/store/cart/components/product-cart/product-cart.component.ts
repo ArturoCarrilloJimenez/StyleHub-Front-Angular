@@ -35,6 +35,7 @@ export class ProductCartComponent implements OnInit {
   urlImage = '';
   size = signal<string>('');
   quantity = signal(0);
+  sizeValue: string = '';
 
   timeoutId: any = null;
   isServerUpdate = signal(false);
@@ -46,12 +47,20 @@ export class ProductCartComponent implements OnInit {
   ngOnInit(): void {
     this.urlImage = `${this.BASE}files/product/${this.product.product.images[0]}`;
     this.size.set(this.product.size);
+    this.sizeValue = this.product.size;
+    this.quantity.set(this.product.quantity); // Asegura que la cantidad inicial esté sincronizada
+  }
+
+  onSizeChange(newSize: string) {
+    this.size.set(newSize);
+    this.updateProductCart(this.product.product.id, this.product.quantity);
   }
 
   updateProductCart(idProduct: string, quantity?: number) {
     if (this.timeoutId !== null) clearTimeout(this.timeoutId);
 
-    if (quantity) this.quantity.set(quantity);
+    if (quantity !== undefined) this.quantity.set(quantity);
+
 
     this.timeoutId = setTimeout(() => {
       if (this.quantity() <= 0) this.deleteProduct(idProduct);

@@ -7,7 +7,7 @@
       <div class="flex justify-between items-center">
         <a
           class="text-base font-semibold md:text-lg hover:text-primary"
-          [routerLink]="`/products/${product.product.slug}`"
+          [routerLink]="['/products', product.product.slug]"
         >
           {{ product.product.title | limitCharacterText : 20 }}
         </a>
@@ -21,13 +21,12 @@
       </div>
       <select
         class="select rounded-full w-20 bg-base-300"
-        [(ngModel)]="size"
-        (change)="updateProductCart(product.product.id)"
+        [(ngModel)]="sizeValue"
+        (ngModelChange)="onSizeChange($event)"
         [disabled]="isServerUpdate()"
+        name="sizeSelect"
       >
-        @for (item of product.product.sizes; track $index) {
-        <option [selected]="size() == item">{{ item }}</option>
-        }
+        <option *ngFor="let item of product.product.sizes" [value]="item">{{ item }}</option>
       </select>
       <div class="mt-auto flex justify-between items-center">
         <h3 class="text-base font-semibold">

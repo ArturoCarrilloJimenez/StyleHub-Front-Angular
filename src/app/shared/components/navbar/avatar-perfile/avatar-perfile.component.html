@@ -8,28 +8,21 @@
 >
   <li class="flex flex-row items-center px-2">
     <shared-profile-avatar-image></shared-profile-avatar-image>
-    <h1>{{ username() | titlecase | limitCharacterText : 15 }}</h1>
+    <div class="flex flex-col items-start">
+      <h1 class="text-lg font-bold">{{ username() | titlecase }}</h1>
+      <h2>{{ email() | lowercase | limitCharacterText : 15 }}</h2>
+    </div>
   </li>
   <hr class="text-base-300" />
   <li class="menu menu-sm w-full">
-    <div>
-      <a
-        class="justify-between"
-        routerLink="/profile"
-        routerLinkActive="menu-active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        Profile
-        <span class="badge">New</span>
-      </a>
-    </div>
     <a
-    *ngIf="isAdmin()"
+      *ngIf="isAdmin()"
       class="justify-between"
       routerLink="/dashboard-admin"
       routerLinkActive="menu-active"
       [routerLinkActiveOptions]="{ exact: true }"
-    >Dashboard</a>
+      >Dashboard</a
+    >
     <div (click)="logout()"><button>Logout</button></div>
   </li>
 </ul>
