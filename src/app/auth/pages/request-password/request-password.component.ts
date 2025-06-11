@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroEnvelope } from '@ng-icons/heroicons/outline';
+import { AlertService } from '../../../utils/services/alert.service';
 
 @Component({
   selector: 'app-request-password',
@@ -37,8 +38,11 @@ export class RequestPasswordComponent {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router
-  ) {}
+    private readonly router: Router,
+    private readonly alertService: AlertService
+  ) {
+    console.log(document.documentElement.getAttribute('data-theme'));
+  }
 
   onSubmit() {
     this.requestPasswordResetForm.markAllAsTouched();
@@ -49,7 +53,17 @@ export class RequestPasswordComponent {
 
       this.authService.forgotPassword({ email }).subscribe((isSendEmail) => {
         if (isSendEmail) {
-          this.router.navigateByUrl('/auth/login');
+          this.alertService
+            .alert({
+              icon: 'success',
+              title: 'Email sent',
+              text: 'Please check your inbox to reset your password.',
+            })
+            .then(() => {
+              this.router.navigateByUrl('auth/login');
+              this.isLoading.set(false);
+            });
+          this.isLoading.set(false);
           return;
         }
 
