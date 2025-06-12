@@ -80,8 +80,8 @@ export class ResetPasswordComponent {
             this.alertService
               .alert({
                 icon: 'success',
-                title: 'Email sent',
-                text: 'Please check your inbox to reset your password.',
+                title: 'Password Reset Successful',
+                text: 'Your password has been reset successfully. You can now log in with your new password.',
               })
               .then(() => {
                 this.router.navigateByUrl('auth/login');
