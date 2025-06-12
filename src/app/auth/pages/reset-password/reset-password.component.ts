@@ -1,11 +1,17 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { LoadingCardComponent } from "../../../shared/components/loading/loading.component";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoadingCardComponent } from '../../../shared/components/loading/loading.component';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FormUtils } from '../../../utils/form-utils';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroKey } from '@ng-icons/heroicons/outline';
+import { AlertService } from '../../../utils/services/alert.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -45,7 +51,8 @@ export class ResetPasswordComponent {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly alertService: AlertService
   ) {
     this.authService.checkRestarPassword(this.token).subscribe({
       next: (response) => {
@@ -70,7 +77,17 @@ export class ResetPasswordComponent {
         .restarPassword({ password }, this.token)
         .subscribe((isPasswordReset) => {
           if (isPasswordReset) {
-            this.router.navigateByUrl('/auth/login');
+            this.alertService
+              .alert({
+                icon: 'success',
+                title: 'Email sent',
+                text: 'Please check your inbox to reset your password.',
+              })
+              .then(() => {
+                this.router.navigateByUrl('auth/login');
+                this.isLoading.set(false);
+              });
+            this.isLoading.set(false);
             return;
           }
 
